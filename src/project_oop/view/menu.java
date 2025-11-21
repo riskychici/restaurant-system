@@ -42,6 +42,7 @@ public class menu extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         btnPesanan = new javax.swing.JButton();
+        btnDaftarMenu = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -141,6 +142,12 @@ public class menu extends javax.swing.JFrame {
         btnPesanan.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-pesanan-hover.png"))); // NOI18N
         getContentPane().add(btnPesanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 204, 266, 63));
 
+        btnDaftarMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-aktif-daftarMenu.png"))); // NOI18N
+        btnDaftarMenu.setBorderPainted(false);
+        btnDaftarMenu.setContentAreaFilled(false);
+        btnDaftarMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        getContentPane().add(btnDaftarMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 279, 266, 63));
+
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/main-bg.png"))); // NOI18N
         jLabel3.setToolTipText("");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -198,6 +205,7 @@ public class menu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBeranda;
     private javax.swing.JButton btnCari;
+    private javax.swing.JButton btnDaftarMenu;
     private javax.swing.JButton btnPesanan;
     private javax.swing.JButton btnTambahMenu;
     private javax.swing.JLabel jLabel1;
