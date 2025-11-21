@@ -37,7 +37,8 @@ public class menu extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         btnCari = new javax.swing.JButton();
         kolomPencarian = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnTambahMenu = new javax.swing.JButton();
+        btnBeranda = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -72,7 +73,7 @@ public class menu extends javax.swing.JFrame {
         jTable1.setName(""); // NOI18N
         jScrollPane1.setViewportView(jTable1);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 240, 1150, -1));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 240, 1330, -1));
 
         btnCari.setFont(new java.awt.Font("Poppins", 1, 15)); // NOI18N
         btnCari.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-cari.png"))); // NOI18N
@@ -105,11 +106,18 @@ public class menu extends javax.swing.JFrame {
         });
         getContentPane().add(kolomPencarian, new org.netbeans.lib.awtextra.AbsoluteConstraints(335, 161, 265, 35));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-tambahMenu.png"))); // NOI18N
-        jButton1.setContentAreaFilled(false);
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-tambahMenu-hover.png"))); // NOI18N
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1500, 59, 160, 51));
+        btnTambahMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-tambahMenu.png"))); // NOI18N
+        btnTambahMenu.setContentAreaFilled(false);
+        btnTambahMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnTambahMenu.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-tambahMenu-hover.png"))); // NOI18N
+        getContentPane().add(btnTambahMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(1500, 59, 160, 51));
+
+        btnBeranda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-beranda.png"))); // NOI18N
+        btnBeranda.setContentAreaFilled(false);
+        btnBeranda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnBeranda.setDefaultCapable(false);
+        btnBeranda.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-beranda-hover.png"))); // NOI18N
+        getContentPane().add(btnBeranda, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 128, 266, 63));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/daftar-menu-layout.png"))); // NOI18N
         jLabel3.setToolTipText("");
@@ -166,8 +174,9 @@ public class menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBeranda;
     private javax.swing.JButton btnCari;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnTambahMenu;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
