@@ -50,7 +50,6 @@ public class login extends javax.swing.JFrame {
 
         username_form.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
         username_form.setBorder(null);
-        username_form.setOpaque(false);
         getContentPane().add(username_form, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 360, 360, 40));
 
         btn_login.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/button_login.png"))); // NOI18N
@@ -65,6 +64,11 @@ public class login extends javax.swing.JFrame {
         btn_login.setPreferredSize(new java.awt.Dimension(0, 0));
         btn_login.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/use_hover_btn_login.png"))); // NOI18N
         btn_login.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_login.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_loginActionPerformed(evt);
+            }
+        });
         getContentPane().add(btn_login, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 580, 150, 70));
 
         label_info.setForeground(new java.awt.Color(255, 0, 51));
@@ -72,7 +76,6 @@ public class login extends javax.swing.JFrame {
 
         password_form.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         password_form.setBorder(null);
-        password_form.setOpaque(false);
         password_form.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 password_formActionPerformed(evt);
@@ -90,6 +93,10 @@ public class login extends javax.swing.JFrame {
     private void password_formActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_password_formActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_password_formActionPerformed
+
+    private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_loginActionPerformed
 
     public JButton login_btn() {
         return btn_login;
