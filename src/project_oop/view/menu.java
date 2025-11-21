@@ -14,7 +14,7 @@ import javax.swing.JTextField;
  * @author riskychici
  */
 public class menu extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(menu.class.getName());
 
     /**
@@ -33,21 +33,15 @@ public class menu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        btnCari = new javax.swing.JButton();
+        kolomPencarian = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel1.setFont(new java.awt.Font("Source Han Sans SC", 1, 28)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel1.setText("Daftar Menu");
-        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 80, 430, -1));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -77,24 +71,58 @@ public class menu extends javax.swing.JFrame {
         jTable1.setName(""); // NOI18N
         jScrollPane1.setViewportView(jTable1);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 130, 1150, -1));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 240, 1150, -1));
 
-        jButton1.setText("Cari");
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1190, 80, -1, -1));
+        btnCari.setFont(new java.awt.Font("Poppins", 1, 15)); // NOI18N
+        btnCari.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-cari.png"))); // NOI18N
+        btnCari.setBorderPainted(false);
+        btnCari.setContentAreaFilled(false);
+        btnCari.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCari.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-cari-hover.png"))); // NOI18N
+        getContentPane().add(btnCari, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 156, 100, 45));
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+        kolomPencarian.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
+        kolomPencarian.setToolTipText("");
+        kolomPencarian.setBorder(null);
+        kolomPencarian.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                kolomPencarianFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                kolomPencarianFocusLost(evt);
             }
         });
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 80, 210, -1));
+        kolomPencarian.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kolomPencarianActionPerformed(evt);
+            }
+        });
+        getContentPane().add(kolomPencarian, new org.netbeans.lib.awtextra.AbsoluteConstraints(335, 161, 265, 35));
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/daftar-menu-layout.png"))); // NOI18N
+        jLabel3.setToolTipText("");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void kolomPencarianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kolomPencarianActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_kolomPencarianActionPerformed
+
+    private void kolomPencarianFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_kolomPencarianFocusGained
+        if (kolomPencarian.getText().equals("Cari Menu")) {
+            kolomPencarian.setText("");
+            kolomPencarian.setForeground(java.awt.Color.BLACK);
+        }
+    }//GEN-LAST:event_kolomPencarianFocusGained
+
+    private void kolomPencarianFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_kolomPencarianFocusLost
+        if (kolomPencarian.getText().isEmpty()) {
+            kolomPencarian.setForeground(java.awt.Color.GRAY);
+            kolomPencarian.setText("Cari Menu");
+        }
+    }//GEN-LAST:event_kolomPencarianFocusLost
 
     /**
      * @param args the command line arguments
@@ -122,10 +150,10 @@ public class menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btnCari;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField kolomPencarian;
     // End of variables declaration//GEN-END:variables
 }
