@@ -39,6 +39,8 @@ public class menu extends javax.swing.JFrame {
         kolomPencarian = new javax.swing.JTextField();
         btnTambahMenu = new javax.swing.JButton();
         btnBeranda = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -119,7 +121,17 @@ public class menu extends javax.swing.JFrame {
         btnBeranda.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-beranda-hover.png"))); // NOI18N
         getContentPane().add(btnBeranda, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 128, 266, 63));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/daftar-menu-layout.png"))); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Poppins SemiBold", 0, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 1, 3));
+        jLabel1.setText("Daftar Menu");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(328, 73, 221, 36));
+
+        jLabel2.setFont(new java.awt.Font("Poppins SemiBold", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(125, 125, 125));
+        jLabel2.setText("Daftar Pilihan Menu");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(375, 24, 221, 21));
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/main-bg.png"))); // NOI18N
         jLabel3.setToolTipText("");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -177,6 +189,8 @@ public class menu extends javax.swing.JFrame {
     private javax.swing.JButton btnBeranda;
     private javax.swing.JButton btnCari;
     private javax.swing.JButton btnTambahMenu;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
