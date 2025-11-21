@@ -37,6 +37,7 @@ public class menu extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         btnCari = new javax.swing.JButton();
         kolomPencarian = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -79,6 +80,11 @@ public class menu extends javax.swing.JFrame {
         btnCari.setContentAreaFilled(false);
         btnCari.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCari.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-cari-hover.png"))); // NOI18N
+        btnCari.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCariActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnCari, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 156, 100, 45));
 
         kolomPencarian.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
@@ -98,6 +104,12 @@ public class menu extends javax.swing.JFrame {
             }
         });
         getContentPane().add(kolomPencarian, new org.netbeans.lib.awtextra.AbsoluteConstraints(335, 161, 265, 35));
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-tambahMenu.png"))); // NOI18N
+        jButton1.setContentAreaFilled(false);
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-tambahMenu-hover.png"))); // NOI18N
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1500, 59, 160, 51));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/daftar-menu-layout.png"))); // NOI18N
         jLabel3.setToolTipText("");
@@ -123,6 +135,10 @@ public class menu extends javax.swing.JFrame {
             kolomPencarian.setText("Cari Menu");
         }
     }//GEN-LAST:event_kolomPencarianFocusLost
+
+    private void btnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCariActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCariActionPerformed
 
     /**
      * @param args the command line arguments
@@ -151,6 +167,7 @@ public class menu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCari;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
