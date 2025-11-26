@@ -12,7 +12,7 @@ public class koneksi implements AutoCloseable {
     public koneksi() throws SQLException {
         String host = "localhost";
         String port = "5432";
-        String db = "penjualan";
+        String db = "db_restoran";
         String username = "risky";
         String pass = "010206";
 

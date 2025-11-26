@@ -39,21 +39,24 @@ public class login extends javax.swing.JFrame {
         btn_login = new javax.swing.JButton();
         label_info = new javax.swing.JLabel();
         password_form = new javax.swing.JPasswordField();
-        back = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setMaximumSize(new java.awt.Dimension(1280, 800));
-        setMinimumSize(new java.awt.Dimension(1280, 800));
-        setPreferredSize(new java.awt.Dimension(1280, 800));
+        setMinimumSize(new java.awt.Dimension(1660, 562));
+        setPreferredSize(new java.awt.Dimension(1705, 1055));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         username_form.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
         username_form.setBorder(null);
-        getContentPane().add(username_form, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 360, 360, 40));
+        username_form.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                username_formActionPerformed(evt);
+            }
+        });
+        getContentPane().add(username_form, new org.netbeans.lib.awtextra.AbsoluteConstraints(684, 468, 420, 27));
 
-        btn_login.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/button_login.png"))); // NOI18N
-        btn_login.setText("Login");
+        btn_login.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn- masuk.png"))); // NOI18N
         btn_login.setBorder(null);
         btn_login.setBorderPainted(false);
         btn_login.setContentAreaFilled(false);
@@ -62,14 +65,14 @@ public class login extends javax.swing.JFrame {
         btn_login.setMaximumSize(new java.awt.Dimension(0, 0));
         btn_login.setMinimumSize(new java.awt.Dimension(0, 0));
         btn_login.setPreferredSize(new java.awt.Dimension(0, 0));
-        btn_login.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/use_hover_btn_login.png"))); // NOI18N
+        btn_login.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-masuk-hover.png"))); // NOI18N
         btn_login.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btn_login.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_loginActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_login, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 580, 150, 70));
+        getContentPane().add(btn_login, new org.netbeans.lib.awtextra.AbsoluteConstraints(617, 700, 510, 63));
 
         label_info.setForeground(new java.awt.Color(255, 0, 51));
         getContentPane().add(label_info, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 530, 370, 20));
@@ -81,11 +84,10 @@ public class login extends javax.swing.JFrame {
                 password_formActionPerformed(evt);
             }
         });
-        getContentPane().add(password_form, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 470, 360, 40));
+        getContentPane().add(password_form, new org.netbeans.lib.awtextra.AbsoluteConstraints(684, 587, 420, 27));
 
-        back.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/use_bak.png"))); // NOI18N
-        getContentPane().add(back, new org.netbeans.lib.awtextra.AbsoluteConstraints(-430, -60, 1710, 926));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/bg-loginMenu.png"))); // NOI18N
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -97,6 +99,10 @@ public class login extends javax.swing.JFrame {
     private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_loginActionPerformed
+
+    private void username_formActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_username_formActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_username_formActionPerformed
 
     public JButton login_btn() {
         return btn_login;
@@ -150,8 +156,8 @@ public class login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel back;
     private javax.swing.JButton btn_login;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel label_info;
     private javax.swing.JPasswordField password_form;
     private javax.swing.JTextField username_form;

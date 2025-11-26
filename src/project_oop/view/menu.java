@@ -46,6 +46,9 @@ public class menu extends javax.swing.JFrame {
         btnKaryawan = new javax.swing.JButton();
         btnMeja = new javax.swing.JButton();
         btnPembayaran = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -120,7 +123,7 @@ public class menu extends javax.swing.JFrame {
         btnTambahMenu.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-tambahMenu-hover.png"))); // NOI18N
         getContentPane().add(btnTambahMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(1500, 59, 160, 51));
 
-        btnBeranda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-beranda.png"))); // NOI18N
+        btnBeranda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-beranda-nonAktif.png"))); // NOI18N
         btnBeranda.setBorderPainted(false);
         btnBeranda.setContentAreaFilled(false);
         btnBeranda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -129,7 +132,7 @@ public class menu extends javax.swing.JFrame {
         getContentPane().add(btnBeranda, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 128, 266, 63));
 
         jLabel1.setFont(new java.awt.Font("Poppins SemiBold", 0, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 1, 3));
+        jLabel1.setForeground(new java.awt.Color(76, 54, 35));
         jLabel1.setText("Daftar Menu");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(328, 73, 221, 36));
 
@@ -138,41 +141,56 @@ public class menu extends javax.swing.JFrame {
         jLabel2.setText("Daftar Pilihan Menu");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(375, 24, 221, 21));
 
-        btnPesanan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-pesanan.png"))); // NOI18N
+        btnPesanan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-pesanan-nonAktif.png"))); // NOI18N
         btnPesanan.setBorderPainted(false);
         btnPesanan.setContentAreaFilled(false);
         btnPesanan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnPesanan.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-pesanan-hover.png"))); // NOI18N
         getContentPane().add(btnPesanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 204, 266, 63));
 
-        btnDaftarMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-aktif-daftarMenu.png"))); // NOI18N
+        btnDaftarMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-daftarMenu-aktif.png"))); // NOI18N
         btnDaftarMenu.setBorderPainted(false);
         btnDaftarMenu.setContentAreaFilled(false);
         btnDaftarMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         getContentPane().add(btnDaftarMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 279, 266, 63));
 
-        btnKaryawan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-karyawan.png"))); // NOI18N
+        btnKaryawan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-karyawan-nonAktif.png"))); // NOI18N
         btnKaryawan.setBorderPainted(false);
         btnKaryawan.setContentAreaFilled(false);
         btnKaryawan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnKaryawan.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-karyawan-hover.png"))); // NOI18N
         getContentPane().add(btnKaryawan, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 354, 266, 63));
 
-        btnMeja.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-meja.png"))); // NOI18N
+        btnMeja.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-meja-nonAktif.png"))); // NOI18N
         btnMeja.setBorderPainted(false);
         btnMeja.setContentAreaFilled(false);
         btnMeja.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnMeja.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-meja-hover.png"))); // NOI18N
         getContentPane().add(btnMeja, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 427, 266, 63));
 
-        btnPembayaran.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-pembayaran.png"))); // NOI18N
+        btnPembayaran.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-pembayaran-nonAktif.png"))); // NOI18N
         btnPembayaran.setBorderPainted(false);
         btnPembayaran.setContentAreaFilled(false);
         btnPembayaran.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnPembayaran.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-pembayaran-hover.png"))); // NOI18N
         getContentPane().add(btnPembayaran, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 499, 266, 63));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/main-bg.png"))); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Poppins", 1, 25)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 246, 235));
+        jLabel4.setText("RISKY RESTO");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 33, 159, 38));
+
+        jLabel5.setFont(new java.awt.Font("Poppins SemiBold", 0, 16)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 246, 235));
+        jLabel5.setText("Risky Wahyu");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(76, 978, 105, 24));
+
+        jLabel6.setFont(new java.awt.Font("Poppins", 0, 13)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 246, 235));
+        jLabel6.setText("Owner");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(76, 1000, 43, 20));
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/bg-mainMenu.png"))); // NOI18N
         jLabel3.setToolTipText("");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -238,6 +256,9 @@ public class menu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField kolomPencarian;
