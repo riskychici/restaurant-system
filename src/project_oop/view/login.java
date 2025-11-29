@@ -39,22 +39,24 @@ public class login extends javax.swing.JFrame {
         btn_login = new javax.swing.JButton();
         label_info = new javax.swing.JLabel();
         password_form = new javax.swing.JPasswordField();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMinimumSize(new java.awt.Dimension(1660, 562));
-        setPreferredSize(new java.awt.Dimension(1705, 1055));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        username_form.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        username_form.setBackground(new java.awt.Color(252, 250, 248));
+        username_form.setFont(new java.awt.Font("Poppins", 0, 18)); // NOI18N
         username_form.setBorder(null);
         username_form.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 username_formActionPerformed(evt);
             }
         });
-        getContentPane().add(username_form, new org.netbeans.lib.awtextra.AbsoluteConstraints(684, 468, 420, 27));
+        getContentPane().add(username_form, new org.netbeans.lib.awtextra.AbsoluteConstraints(662, 468, 420, 27));
 
         btn_login.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn- masuk.png"))); // NOI18N
         btn_login.setBorder(null);
@@ -72,21 +74,30 @@ public class login extends javax.swing.JFrame {
                 btn_loginActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_login, new org.netbeans.lib.awtextra.AbsoluteConstraints(617, 700, 510, 63));
+        getContentPane().add(btn_login, new org.netbeans.lib.awtextra.AbsoluteConstraints(595, 700, 510, 63));
 
         label_info.setForeground(new java.awt.Color(255, 0, 51));
         getContentPane().add(label_info, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 530, 370, 20));
 
-        password_form.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        password_form.setBackground(new java.awt.Color(252, 250, 248));
+        password_form.setFont(new java.awt.Font("Poppins", 0, 18)); // NOI18N
         password_form.setBorder(null);
         password_form.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 password_formActionPerformed(evt);
             }
         });
-        getContentPane().add(password_form, new org.netbeans.lib.awtextra.AbsoluteConstraints(684, 587, 420, 27));
+        getContentPane().add(password_form, new org.netbeans.lib.awtextra.AbsoluteConstraints(662, 587, 420, 27));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/bg-loginMenu.png"))); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Poppins", 1, 40)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("RISKY RESTO");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(725, 236, 254, 60));
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/form-login.png"))); // NOI18N
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(543, 368, 619, 442));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/bg-login.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
@@ -158,6 +169,8 @@ public class login extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_login;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel label_info;
     private javax.swing.JPasswordField password_form;
     private javax.swing.JTextField username_form;

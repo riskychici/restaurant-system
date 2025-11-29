@@ -6,7 +6,7 @@
 package project_oop.controller;
 
 import project_oop.model.m_produk;
-import project_oop.view.main_view;
+import project_oop.view.daftarMenu;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -29,11 +29,13 @@ import java.util.ArrayList;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import style_table.ModernTable;
+import project_oop.view.pesanan;
 
 public class c_produk {
 
-    private final m_produk model;
-    private final main_view view;
+    private m_produk model;
+    private daftarMenu view;
+    private pesanan view2;
 
     public c_produk() throws SQLException {
         try {
@@ -48,7 +50,8 @@ public class c_produk {
         }
 
         this.model = new m_produk();
-        this.view = new main_view();
+        this.view = new daftarMenu();
+        this.view2 = new pesanan();
         this.view.setVisible(true);
 
         // Tambah listener tombol cari
@@ -67,45 +70,43 @@ public class c_produk {
         } catch (Exception ex) {
             System.err.println("Gagal load FlatLaf: " + ex.getMessage());
         }
+        view.btn_sidebar_pesanan().addActionListener(new pesanan_listener());
     }
 
     public void tampilkanProduk() {
         try {
             String search = view.getTxtSearch().getText().trim();
-            List<Object[]> dataFromDB = model.getDaftarProduk(search, 50, 0);
+            List<Object[]> dataFromDB = model.getDaftarProduk(search);
 
             // Transform data ke format yang dibutuhkan
             List<Object[]> transformedData = new ArrayList<>();
             for (Object[] row : dataFromDB) {
-                Object[] newRow = new Object[5]; // 5 kolom (tanpa No, akan otomatis)
+                Object[] newRow = new Object[5];
 
-                // Kolom 0: ID (akan di-hide)
+                // Kolom 0: ID
                 newRow[0] = row[0];
 
-                // Kolom 1: Produk (multi-line)
-                String kategori = row[1] != null ? row[1].toString() : "";
-                String nama = row[2] != null ? row[2].toString() : "";
-                String info = row[8] != null ? row[8].toString() : "";
-                boolean stsDiskon = row[6] != null && row[6].toString().equalsIgnoreCase("true");
-                newRow[1] = new Object[]{kategori, nama, info, stsDiskon};
+                // Kolom 1: Produk (multi-line) → kategori, nama, status
+                String nama = row[1] != null ? row[1].toString() : "";
+                String kategori = row[2] != null ? row[2].toString() : "";
+                String status = row[5] != null ? row[5].toString() : "";
+                newRow[1] = new Object[]{kategori, nama, status};
 
-                // Kolom 2: Harga
-                String hargaAsli = row[3] != null ? row[3].toString() : "";
-                String hargaDiskon = row[4] != null ? row[4].toString() : "";
-                String diskon = row[7] != null ? row[7].toString() : "";
-                newRow[2] = new String[]{hargaAsli, hargaDiskon, diskon};
+                // Kolom 2: Harga (pakai satu harga saja)
+                String harga = row[3] != null ? row[3].toString() : "";
+                newRow[2] = new String[]{harga};
 
                 // Kolom 3: Stok
-                newRow[3] = row[5] != null ? row[5].toString() : "0";
+                newRow[3] = row[4] != null ? row[4].toString() : "0";
 
-                // Kolom 4: Aksi (placeholder)
+                // Kolom 4: Aksi
                 newRow[4] = "";
 
                 transformedData.add(newRow);
             }
 
             // Setup & render tabel
-            new ModernTable(view.getTblProduk())
+            new ModernTable(view.getTblMenu())
                     .setColumns(new String[]{"No", "ID", "Produk", "Harga", "Stok", "Aksi"})
                     .hideColumn(1) // Hide kolom ID
                     .configureColumn(0, ModernTable.ColumnType.NUMBER, 50)
@@ -152,6 +153,20 @@ public class c_produk {
         // Logic edit produk
         JOptionPane.showMessageDialog(view, "Edit Produk ID: " + id);
         System.out.println("Edit produk: " + id);
+    }
+
+    private class pesanan_listener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                new c_pesanan();
+                view.dispose();
+            } catch (SQLException ex) {
+                System.getLogger(c_pesanan.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
+        }
+
     }
 
 }

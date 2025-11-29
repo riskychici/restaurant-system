@@ -18,14 +18,12 @@ public class m_produk {
         this.koneksi = new koneksi();
     }
 
-    public List<Object[]> getDaftarProduk(String search, int limit, int offset) throws SQLException {
+    public List<Object[]> getDaftarProduk(String search) throws SQLException {
         List<Object[]> data = new ArrayList<>();
-        String sql = "SELECT * FROM public.daftar_produk(?, ?, ?)";
+        String sql = "SELECT * FROM public.daftar_menu(?)";
 
         try (PreparedStatement ps = koneksi.prepareStatement(sql)) {
             ps.setString(1, search);
-            ps.setInt(2, limit);
-            ps.setInt(3, offset);
 
             try (ResultSet rs = ps.executeQuery()) {
                 ResultSetMetaData meta = rs.getMetaData();

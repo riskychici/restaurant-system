@@ -37,7 +37,7 @@ public class c_user {
             password = v_lg_objct.get_password().getText();
             if (username.equalsIgnoreCase("riskychici") && password.equalsIgnoreCase("admin")) {
                 try {
-                    new c_produk();
+                    new c_daftarMenu();
                     v_lg_objct.setVisible(false);
                 } catch (SQLException ex) {
                     Logger.getLogger(c_user.class.getName()).log(Level.SEVERE, null, ex);

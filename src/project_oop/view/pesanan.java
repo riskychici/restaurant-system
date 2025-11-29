@@ -4,8 +4,10 @@ import com.formdev.flatlaf.ui.FlatBorder;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.Label;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
@@ -13,14 +15,14 @@ import javax.swing.JTextField;
  *
  * @author riskychici
  */
-public class menu extends javax.swing.JFrame {
+public class pesanan extends javax.swing.JFrame {
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(menu.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(pesanan.class.getName());
 
     /**
      * Creates new form menu
      */
-    public menu() {
+    public pesanan() {
         initComponents();
     }
 
@@ -34,7 +36,7 @@ public class menu extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabel_daftar_menu = new javax.swing.JTable();
         btnCari = new javax.swing.JButton();
         kolomPencarian = new javax.swing.JTextField();
         btnTambahMenu = new javax.swing.JButton();
@@ -55,7 +57,7 @@ public class menu extends javax.swing.JFrame {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabel_daftar_menu.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -80,8 +82,8 @@ public class menu extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jTable1.setName(""); // NOI18N
-        jScrollPane1.setViewportView(jTable1);
+        tabel_daftar_menu.setName(""); // NOI18N
+        jScrollPane1.setViewportView(tabel_daftar_menu);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 240, 1330, -1));
 
@@ -133,25 +135,25 @@ public class menu extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Poppins SemiBold", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(76, 54, 35));
-        jLabel1.setText("Daftar Menu");
+        jLabel1.setText("Pesanan");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(328, 73, 221, 36));
 
         jLabel2.setFont(new java.awt.Font("Poppins SemiBold", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(125, 125, 125));
-        jLabel2.setText("Daftar Pilihan Menu");
+        jLabel2.setText("Daftar Pesanan");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(375, 24, 221, 21));
 
-        btnPesanan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-pesanan-nonAktif.png"))); // NOI18N
+        btnPesanan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-pesanan-aktif.png"))); // NOI18N
         btnPesanan.setBorderPainted(false);
         btnPesanan.setContentAreaFilled(false);
         btnPesanan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnPesanan.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-pesanan-hover.png"))); // NOI18N
         getContentPane().add(btnPesanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 204, 266, 63));
 
-        btnDaftarMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-daftarMenu-aktif.png"))); // NOI18N
+        btnDaftarMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-daftarMenu-nonAktif.png"))); // NOI18N
         btnDaftarMenu.setBorderPainted(false);
         btnDaftarMenu.setContentAreaFilled(false);
         btnDaftarMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnDaftarMenu.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-daftarMenu-hover.png"))); // NOI18N
         getContentPane().add(btnDaftarMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 279, 266, 63));
 
         btnKaryawan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-karyawan-nonAktif.png"))); // NOI18N
@@ -201,6 +203,18 @@ public class menu extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_kolomPencarianActionPerformed
 
+    public JTable getTblMenu() {
+        return tabel_daftar_menu;
+    }
+
+    
+    public JTextField getTxtSearch() {
+        return kolomPencarian;
+    }
+
+    public JButton getBtnCari() {
+        return btnCari;
+    }
     private void kolomPencarianFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_kolomPencarianFocusGained
         if (kolomPencarian.getText().equals("Cari Menu")) {
             kolomPencarian.setText("");
@@ -241,7 +255,7 @@ public class menu extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new menu().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new pesanan().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -260,7 +274,7 @@ public class menu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField kolomPencarian;
+    private javax.swing.JTable tabel_daftar_menu;
     // End of variables declaration//GEN-END:variables
 }

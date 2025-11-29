@@ -19,7 +19,7 @@ import java.util.ArrayList;
  * String[]{"No", "Nama", "Email", "Status"}); table.setData(dataList);
  * table.addActionButton("Edit", Color.BLUE, (row) -> { ... }); table.render();
  */
-public class ModernTable {
+public class ModernTable_backup {
 
     private JTable table;
     private DefaultTableModel model;
@@ -29,7 +29,7 @@ public class ModernTable {
     private boolean showNumber = true;
     private int hiddenColumnIndex = -1;
 
-    public ModernTable(JTable existingTable) {
+    public ModernTable_backup(JTable existingTable) {
         this.table = existingTable;
         this.columnConfigs = new ArrayList<>();
         this.actionButtons = new ArrayList<>();
@@ -41,7 +41,7 @@ public class ModernTable {
      *
      * @param columns Array nama kolom
      */
-    public ModernTable setColumns(String[] columns) {
+    public ModernTable_backup setColumns(String[] columns) {
         model = new DefaultTableModel(columns, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -55,7 +55,7 @@ public class ModernTable {
     /**
      * Konfigurasi detail kolom
      */
-    public ModernTable configureColumn(int index, ColumnType type, int width) {
+    public ModernTable_backup configureColumn(int index, ColumnType type, int width) {
         columnConfigs.add(new ColumnConfig(index, type, width));
         return this;
     }
@@ -63,7 +63,7 @@ public class ModernTable {
     /**
      * Sembunyikan kolom tertentu (biasanya ID)
      */
-    public ModernTable hideColumn(int index) {
+    public ModernTable_backup hideColumn(int index) {
         this.hiddenColumnIndex = index;
         return this;
     }
@@ -71,7 +71,7 @@ public class ModernTable {
     /**
      * Tampilkan/sembunyikan nomor urut
      */
-    public ModernTable showNumbering(boolean show) {
+    public ModernTable_backup showNumbering(boolean show) {
         this.showNumber = show;
         return this;
     }
@@ -79,7 +79,7 @@ public class ModernTable {
     /**
      * Set tinggi baris
      */
-    public ModernTable setRowHeight(int height) {
+    public ModernTable_backup setRowHeight(int height) {
         this.rowHeight = height;
         return this;
     }
@@ -92,7 +92,7 @@ public class ModernTable {
      * @param color Warna tombol
      * @param action Callback saat diklik, menerima data row
      */
-    public ModernTable addActionButton(String label, Color color, ActionCallback action) {
+    public ModernTable_backup addActionButton(String label, Color color, ActionCallback action) {
         actionButtons.add(new ActionButton(label, color, action));
         return this;
     }
@@ -103,7 +103,7 @@ public class ModernTable {
      *
      * @param data List of Object[] - setiap array adalah 1 row
      */
-    public ModernTable setData(List<Object[]> data) {
+    public ModernTable_backup setData(List<Object[]> data) {
         if (model == null) {
             throw new IllegalStateException("Set columns first using setColumns()");
         }
@@ -355,11 +355,17 @@ public class ModernTable {
         private void renderMultiLine(Object val) {
             if (val instanceof Object[]) {
                 Object[] info = (Object[]) val;
+                String kategori = info.length > 0 ? info[0].toString() : "";
                 String nama = info.length > 1 ? info[1].toString() : "";
+                String extra = info.length > 2 ? info[2].toString() : "";
                 boolean hasBadge = info.length > 3 && (Boolean) info[3];
 
                 JPanel topRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 6, 0));
                 topRow.setOpaque(false);
+
+                if (!kategori.isEmpty()) {
+                    topRow.add(createBadge(kategori, new Color(241, 245, 249), new Color(100, 116, 139)));
+                }
 
                 if (hasBadge) {
                     topRow.add(createBadge("DISKON AKTIF", new Color(254, 226, 226), new Color(220, 38, 38)));
@@ -375,6 +381,14 @@ public class ModernTable {
                 lblNama.setAlignmentX(Component.LEFT_ALIGNMENT);
                 add(lblNama);
 
+                if (!extra.isEmpty()) {
+                    add(Box.createVerticalStrut(3));
+                    JLabel lblExtra = new JLabel(extra);
+                    lblExtra.setFont(new Font("Segoe UI", Font.ITALIC, 10));
+                    lblExtra.setForeground(new Color(148, 163, 184));
+                    lblExtra.setAlignmentX(Component.LEFT_ALIGNMENT);
+                    add(lblExtra);
+                }
             }
         }
 

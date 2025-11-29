@@ -11,7 +11,7 @@ import koneksi.koneksi;
 import project_oop.controller.c_user;
 import com.formdev.flatlaf.FlatLightLaf;
 import project_oop.controller.c_kategori_produk;
-import project_oop.controller.c_menu;
+import project_oop.controller.c_daftarMenu;
 import project_oop.controller.c_produk;
 
 /**
@@ -32,7 +32,7 @@ public class Project_oop {
         java.awt.EventQueue.invokeLater(() -> {
             try {
 //                new c_kategori_produk(); // panggil controller utama kamu
-                new c_menu();
+                new c_user();
             } catch (Exception e) {
                 e.printStackTrace();
             }
