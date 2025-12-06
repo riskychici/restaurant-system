@@ -4,10 +4,8 @@ import com.formdev.flatlaf.ui.FlatBorder;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
-import java.awt.Label;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
@@ -15,16 +13,16 @@ import javax.swing.JTextField;
  *
  * @author riskychici
  */
-public class pesanan extends javax.swing.JFrame {
+public class pembayaran extends javax.swing.JFrame {
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(pesanan.class.getName());
-    private final String CARI_PLACEHOLDER = "Cari Pesanan";
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(pembayaran.class.getName());
+    private final String CARI_PLACEHOLDER = "Cari Pembayaran";
     private final java.awt.Color PLACEHOLDER_COLOR = new java.awt.Color(153, 153, 153);
 
     /**
      * Creates new form menu
      */
-    public pesanan() {
+    public pembayaran() {
         initComponents();
         java.awt.EventQueue.invokeLater(() -> {
             setInitialPlaceholder();
@@ -48,7 +46,7 @@ public class pesanan extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tabelPesanan = new javax.swing.JTable();
+        tabelPembayaran = new javax.swing.JTable();
         btnCari = new javax.swing.JButton();
         kolomPencarian = new javax.swing.JTextField();
         btnTambahMenu = new javax.swing.JButton();
@@ -70,7 +68,8 @@ public class pesanan extends javax.swing.JFrame {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        tabelPesanan.setModel(new javax.swing.table.DefaultTableModel(
+        tabelPembayaran.setBackground(new java.awt.Color(252, 250, 248));
+        tabelPembayaran.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -95,10 +94,10 @@ public class pesanan extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        tabelPesanan.setName(""); // NOI18N
-        jScrollPane1.setViewportView(tabelPesanan);
+        tabelPembayaran.setName(""); // NOI18N
+        jScrollPane1.setViewportView(tabelPembayaran);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 240, 1330, 720));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 240, 1350, 720));
 
         btnCari.setFont(new java.awt.Font("Poppins", 1, 15)); // NOI18N
         btnCari.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-cari.png"))); // NOI18N
@@ -148,18 +147,19 @@ public class pesanan extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Poppins SemiBold", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(76, 54, 35));
-        jLabel1.setText("Daftar Pesanan");
+        jLabel1.setText("Pembayaran");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(328, 73, 221, 36));
 
         jLabel2.setFont(new java.awt.Font("Poppins SemiBold", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(125, 125, 125));
-        jLabel2.setText("Daftar Pesanan");
+        jLabel2.setText("Menu Pembayaran");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(375, 24, 221, 21));
 
-        btnSidePesanan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-pesanan-aktif.png"))); // NOI18N
+        btnSidePesanan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-pesanan-nonAktif.png"))); // NOI18N
         btnSidePesanan.setBorderPainted(false);
         btnSidePesanan.setContentAreaFilled(false);
         btnSidePesanan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSidePesanan.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-pesanan-hover.png"))); // NOI18N
         getContentPane().add(btnSidePesanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 204, 266, 63));
 
         btnSideDaftarMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-daftarMenu-nonAktif.png"))); // NOI18N
@@ -183,11 +183,10 @@ public class pesanan extends javax.swing.JFrame {
         btnSideMeja.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-meja-hover.png"))); // NOI18N
         getContentPane().add(btnSideMeja, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 427, 266, 63));
 
-        btnSidePembayaran.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-pembayaran-nonAktif.png"))); // NOI18N
+        btnSidePembayaran.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-pembayaran-aktif.png"))); // NOI18N
         btnSidePembayaran.setBorderPainted(false);
         btnSidePembayaran.setContentAreaFilled(false);
         btnSidePembayaran.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnSidePembayaran.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-pembayaran-hover.png"))); // NOI18N
         getContentPane().add(btnSidePembayaran, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 499, 266, 63));
 
         jLabel4.setFont(new java.awt.Font("Poppins", 1, 25)); // NOI18N
@@ -224,16 +223,20 @@ public class pesanan extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_kolomPencarianActionPerformed
 
-    public JTable getTblPesanan() {
-        return tabelPesanan;
+    public JTable getTblPembayaran() {
+        return tabelPembayaran;
     }
 
     public JTextField getTxtSearch() {
         return kolomPencarian;
     }
-    
+
     public JButton getBtnSidebarBeranda() {
         return btnSideBeranda;
+    }
+    
+    public JButton getBtnSidebarPesanan() {
+        return btnSidePesanan;
     }
 
     public JButton getBtnSidebarDaftarMenu() {
@@ -248,12 +251,12 @@ public class pesanan extends javax.swing.JFrame {
         return btnSideMeja;
     }
 
-    public JButton getBtnSidebarPembayaran() {
-        return btnSidePembayaran;
-    }
-    
     public JButton getBtnCari() {
         return btnCari;
+    }
+
+    public JButton getBtnTambahMenu() {
+        return btnTambahMenu;
     }
     
     private void kolomPencarianFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_kolomPencarianFocusGained
@@ -296,7 +299,7 @@ public class pesanan extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new pesanan().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new pembayaran().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -317,6 +320,6 @@ public class pesanan extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField kolomPencarian;
-    private javax.swing.JTable tabelPesanan;
+    private javax.swing.JTable tabelPembayaran;
     // End of variables declaration//GEN-END:variables
 }

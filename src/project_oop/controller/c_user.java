@@ -43,7 +43,7 @@ public class c_user {
                     Logger.getLogger(c_user.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else {
-                v_lg_objct.label_info().setText("Password kamu salah");
+                v_lg_objct.label_info().setText("Email atau Password kamu salah!");
             }
         }
 

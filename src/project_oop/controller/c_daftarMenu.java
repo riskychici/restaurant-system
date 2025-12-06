@@ -20,6 +20,37 @@ public class c_daftarMenu {
     private daftarMenu view;
     private pesanan view2;
 
+    // Aksi tombol Sidebar
+//    // Sidebar Beranda
+//    private class btnSidebarPesanan implements ActionListener {
+//
+//        @Override
+//        public void actionPerformed(ActionEvent e) {
+//            try {
+//                new c_pesanan();
+//                view.dispose();
+//            } catch (SQLException ex) {
+//                System.getLogger(c_pesanan.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+//            }
+//        }
+//
+//    }
+    
+    // Sidebar Pesanan
+    private class btnSidebarPesanan implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                new c_pesanan();
+                view.dispose();
+            } catch (SQLException ex) {
+                System.getLogger(c_pesanan.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
+        }
+
+    }
+    
     public c_daftarMenu() throws SQLException {
         try {
             UIManager.setLookAndFeel(new FlatLightLaf());
@@ -41,62 +72,66 @@ public class c_daftarMenu {
         this.view.getBtnCari().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                tampilkanProduk();
+                tampilkanDaftarMenu();
             }
         });
 
         // Load awal
-        tampilkanProduk();
+        tampilkanDaftarMenu();
 
         try {
             FlatLightLaf.setup();
         } catch (Exception ex) {
             System.err.println("Gagal load FlatLaf: " + ex.getMessage());
         }
-        view.btn_sidebar_pesanan().addActionListener(new pesanan_listener());
+        view.getBtnSidebarPesanan().addActionListener(new btnSidebarPesanan());
     }
 
-    public void tampilkanProduk() {
+    public void tampilkanDaftarMenu() {
         try {
             String search = view.getTxtSearch().getText().trim();
-            List<Object[]> dataFromDB = model.getDaftarProduk(search);
+            List<Object[]> dataFromDB = model.getDaftarMenu(search);
 
             // Transform data ke format yang dibutuhkan
             List<Object[]> transformedData = new ArrayList<>();
             for (Object[] row : dataFromDB) {
-                Object[] newRow = new Object[5];
+                Object[] newRow = new Object[6];
 
                 // Kolom 0: ID
                 newRow[0] = row[0];
 
                 // Kolom 1: Produk (multi-line) → kategori, nama, status
+                // Sekarang di ubah hanya menampilkan nama menu saja
                 String nama = row[1] != null ? row[1].toString() : "";
-                String kategori = row[2] != null ? row[2].toString() : "";
-                String status = row[5] != null ? row[5].toString() : "";
-                newRow[1] = new Object[]{kategori, nama, status};
+                newRow[1] = new Object[]{"", nama};
                 
-                // Kolom 2: Harga (pakai satu harga saja)
+                // Kolom 2: Kategori
+                String kategori = row[2] != null ? row[2].toString() : "";
+                newRow[2] = kategori;
+                
+                // Kolom 3: Harga (pakai satu harga saja)
                 String harga = row[3] != null ? row[3].toString() : "";
-                newRow[2] = new String[]{harga};
+                newRow[3] = new String[]{"Rp " + harga};
 
-                // Kolom 3: Stok
-                newRow[3] = row[4] != null ? row[4].toString() : "0";
+                // Kolom 4: Stok
+                newRow[4] = row[4] != null ? row[4].toString() : "0";
 
-                // Kolom 4: Aksi
-                newRow[4] = "";
+                // Kolom 5: Aksi
+                newRow[5] = "";
 
                 transformedData.add(newRow);
             }
 
             // Setup & render tabel
             new ModernTable(view.getTblMenu())
-                    .setColumns(new String[]{"No", "ID", "Menu", "Harga", "Stok", "Aksi"})
+                    .setColumns(new String[]{"No", "ID", "Menu", "Kategori", "Harga", "Stok", "Aksi"})
                     .hideColumn(1) // Hide kolom ID
                     .configureColumn(0, ModernTable.ColumnType.NUMBER, 50)
-                    .configureColumn(2, ModernTable.ColumnType.MULTI_LINE, 380)
-                    .configureColumn(3, ModernTable.ColumnType.PRICE, 180)
-                    .configureColumn(4, ModernTable.ColumnType.STOCK, 90)
-                    .configureColumn(5, ModernTable.ColumnType.ACTIONS, 230)
+                    .configureColumn(2, ModernTable.ColumnType.MULTI_LINE, 300)
+                    .configureColumn(3, ModernTable.ColumnType.CATEGORY, 120)
+                    .configureColumn(4, ModernTable.ColumnType.PRICE, 180)
+                    .configureColumn(5, ModernTable.ColumnType.STOCK, 90)
+                    .configureColumn(6, ModernTable.ColumnType.ACTIONS, 230)
                     .setRowHeight(70)
                     .addActionButton("Detail", new Color(59, 130, 246), (row, rowData) -> {
                         String id = rowData[1].toString();
@@ -104,7 +139,7 @@ public class c_daftarMenu {
                     })
                     .addActionButton("Edit", new Color(251, 146, 60), (row, rowData) -> {
                         String id = rowData[1].toString();
-                        editProduk(id);
+                        editMenu(id);
                     })
                     .addActionButton("Hapus", new Color(239, 68, 68), (row, rowData) -> {
                         String id = rowData[1].toString();
@@ -115,7 +150,7 @@ public class c_daftarMenu {
                         if (confirm == JOptionPane.YES_OPTION) {
                             model.hapusProduk(id);
                             JOptionPane.showMessageDialog(view, "Produk berhasil dihapus!");
-                            tampilkanProduk(); // Refresh
+                            tampilkanDaftarMenu(); // Refresh
                         }
                     })
                     .setData(transformedData)
@@ -132,24 +167,10 @@ public class c_daftarMenu {
         System.out.println("Detail produk: " + id);
     }
 
-    private void editProduk(String id) {
+    private void editMenu(String id) {
         // Logic edit produk
         JOptionPane.showMessageDialog(view, "Edit Produk ID: " + id);
         System.out.println("Edit produk: " + id);
-    }
-
-    private class pesanan_listener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            try {
-                new c_pesanan();
-                view.dispose();
-            } catch (SQLException ex) {
-                System.getLogger(c_pesanan.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            }
-        }
-
     }
 
     

@@ -13,7 +13,7 @@ public class koneksi implements AutoCloseable {
         String host = "localhost";
         String port = "5432";
         String db = "db_restoran";
-        String username = "risky";
+        String username = "postgres";
         String pass = "010206";
 
         String url = "jdbc:postgresql://" + host + ":" + port + "/" + db;

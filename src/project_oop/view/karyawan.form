@@ -40,7 +40,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="tabelDaftarMenu">
+        <Component class="javax.swing.JTable" name="tabelDaftarKaryawan">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f8" green="fa" red="fc" type="rgb"/>
@@ -48,11 +48,11 @@
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="6" rowCount="10">
                 <Column editable="true" title="No" type="java.lang.Integer"/>
-                <Column editable="true" title="Nama" type="java.lang.String"/>
-                <Column editable="true" title="Kategori" type="java.lang.String"/>
-                <Column editable="true" title="Harga" type="java.lang.Double"/>
-                <Column editable="true" title="Stok" type="java.lang.Integer"/>
-                <Column editable="true" title="Status" type="java.lang.String"/>
+                <Column editable="true" title="" type="java.lang.String"/>
+                <Column editable="true" title="" type="java.lang.String"/>
+                <Column editable="true" title="" type="java.lang.Double"/>
+                <Column editable="true" title="" type="java.lang.Integer"/>
+                <Column editable="true" title="" type="java.lang.String"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -193,7 +193,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="23" green="36" red="4c" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Daftar Menu"/>
+        <Property name="text" type="java.lang.String" value="Daftar Karyawan"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -209,7 +209,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="7d" green="7d" red="7d" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Daftar Pilihan Menu"/>
+        <Property name="text" type="java.lang.String" value="Daftar Karyawan"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -240,12 +240,15 @@
     <Component class="javax.swing.JButton" name="btnSideDaftarMenu">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/image/btn-sidebar-daftarMenu-aktif.png"/>
+          <Image iconType="3" name="/image/btn-sidebar-daftarMenu-nonAktif.png"/>
         </Property>
         <Property name="borderPainted" type="boolean" value="false"/>
         <Property name="contentAreaFilled" type="boolean" value="false"/>
         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
           <Color id="Hand Cursor"/>
+        </Property>
+        <Property name="rolloverIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/image/btn-sidebar-daftarMenu-hover.png"/>
         </Property>
       </Properties>
       <Constraints>
@@ -257,15 +260,12 @@
     <Component class="javax.swing.JButton" name="btnSideKaryawan">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/image/btn-sidebar-karyawan-nonAktif.png"/>
+          <Image iconType="3" name="/image/btn-sidebar-karyawan-aktif.png"/>
         </Property>
         <Property name="borderPainted" type="boolean" value="false"/>
         <Property name="contentAreaFilled" type="boolean" value="false"/>
         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
           <Color id="Hand Cursor"/>
-        </Property>
-        <Property name="rolloverIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/image/btn-sidebar-karyawan-hover.png"/>
         </Property>
       </Properties>
       <Constraints>

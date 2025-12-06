@@ -5,17 +5,17 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class m_daftarMenu {
+public class m_pesanan {
 
     private final koneksi koneksi;
     
-    public m_daftarMenu() throws SQLException {
+    public m_pesanan() throws SQLException {
         this.koneksi = new koneksi();
     }
 
-    public List<Object[]> getDaftarMenu(String search) throws SQLException {
+    public List<Object[]> getPesanan(String search) throws SQLException {
         List<Object[]> data = new ArrayList<>();
-        String sql = "SELECT * FROM public.daftar_menu(?)";
+        String sql = "SELECT * FROM public.pesanan(?)";
 
         try (PreparedStatement ps = koneksi.prepareStatement(sql)) {
             ps.setString(1, search);

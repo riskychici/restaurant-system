@@ -16,12 +16,24 @@ import javax.swing.JTextField;
 public class daftarMenu extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(daftarMenu.class.getName());
+    private final String CARI_PLACEHOLDER = "Cari Menu";
+    private final java.awt.Color PLACEHOLDER_COLOR = new java.awt.Color(153, 153, 153);
 
     /**
      * Creates new form menu
      */
     public daftarMenu() {
         initComponents();
+        java.awt.EventQueue.invokeLater(() -> {
+            setInitialPlaceholder();
+        });
+        getContentPane().requestFocusInWindow();
+    }
+
+    private void setInitialPlaceholder() {
+        // Untuk Username
+        kolomPencarian.setText(CARI_PLACEHOLDER);
+        kolomPencarian.setForeground(PLACEHOLDER_COLOR);
     }
 
     /**
@@ -34,29 +46,30 @@ public class daftarMenu extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tabel_daftar_menu = new javax.swing.JTable();
+        tabelDaftarMenu = new javax.swing.JTable();
         btnCari = new javax.swing.JButton();
         kolomPencarian = new javax.swing.JTextField();
         btnTambahMenu = new javax.swing.JButton();
-        btnBeranda = new javax.swing.JButton();
+        btnSideBeranda = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        btnPesanan = new javax.swing.JButton();
-        btnDaftarMenu = new javax.swing.JButton();
-        btnKaryawan = new javax.swing.JButton();
-        btnMeja = new javax.swing.JButton();
-        btnPembayaran = new javax.swing.JButton();
+        btnSidePesanan = new javax.swing.JButton();
+        btnSideDaftarMenu = new javax.swing.JButton();
+        btnSideKaryawan = new javax.swing.JButton();
+        btnSideMeja = new javax.swing.JButton();
+        btnSidePembayaran = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        btnKeluar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        tabel_daftar_menu.setBackground(new java.awt.Color(252, 250, 248));
-        tabel_daftar_menu.setModel(new javax.swing.table.DefaultTableModel(
+        tabelDaftarMenu.setBackground(new java.awt.Color(252, 250, 248));
+        tabelDaftarMenu.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -81,10 +94,10 @@ public class daftarMenu extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        tabel_daftar_menu.setName(""); // NOI18N
-        jScrollPane1.setViewportView(tabel_daftar_menu);
+        tabelDaftarMenu.setName(""); // NOI18N
+        jScrollPane1.setViewportView(tabelDaftarMenu);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 240, 1330, -1));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 240, 1350, 720));
 
         btnCari.setFont(new java.awt.Font("Poppins", 1, 15)); // NOI18N
         btnCari.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-cari.png"))); // NOI18N
@@ -124,13 +137,13 @@ public class daftarMenu extends javax.swing.JFrame {
         btnTambahMenu.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-tambahMenu-hover.png"))); // NOI18N
         getContentPane().add(btnTambahMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(1500, 59, 160, 51));
 
-        btnBeranda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-beranda-nonAktif.png"))); // NOI18N
-        btnBeranda.setBorderPainted(false);
-        btnBeranda.setContentAreaFilled(false);
-        btnBeranda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnBeranda.setDefaultCapable(false);
-        btnBeranda.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-beranda-hover.png"))); // NOI18N
-        getContentPane().add(btnBeranda, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 128, 266, 63));
+        btnSideBeranda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-beranda-nonAktif.png"))); // NOI18N
+        btnSideBeranda.setBorderPainted(false);
+        btnSideBeranda.setContentAreaFilled(false);
+        btnSideBeranda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSideBeranda.setDefaultCapable(false);
+        btnSideBeranda.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-beranda-hover.png"))); // NOI18N
+        getContentPane().add(btnSideBeranda, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 128, 266, 63));
 
         jLabel1.setFont(new java.awt.Font("Poppins SemiBold", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(76, 54, 35));
@@ -142,39 +155,39 @@ public class daftarMenu extends javax.swing.JFrame {
         jLabel2.setText("Daftar Pilihan Menu");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(375, 24, 221, 21));
 
-        btnPesanan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-pesanan-nonAktif.png"))); // NOI18N
-        btnPesanan.setBorderPainted(false);
-        btnPesanan.setContentAreaFilled(false);
-        btnPesanan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnPesanan.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-pesanan-hover.png"))); // NOI18N
-        getContentPane().add(btnPesanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 204, 266, 63));
+        btnSidePesanan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-pesanan-nonAktif.png"))); // NOI18N
+        btnSidePesanan.setBorderPainted(false);
+        btnSidePesanan.setContentAreaFilled(false);
+        btnSidePesanan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSidePesanan.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-pesanan-hover.png"))); // NOI18N
+        getContentPane().add(btnSidePesanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 204, 266, 63));
 
-        btnDaftarMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-daftarMenu-aktif.png"))); // NOI18N
-        btnDaftarMenu.setBorderPainted(false);
-        btnDaftarMenu.setContentAreaFilled(false);
-        btnDaftarMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        getContentPane().add(btnDaftarMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 279, 266, 63));
+        btnSideDaftarMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-daftarMenu-aktif.png"))); // NOI18N
+        btnSideDaftarMenu.setBorderPainted(false);
+        btnSideDaftarMenu.setContentAreaFilled(false);
+        btnSideDaftarMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        getContentPane().add(btnSideDaftarMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 279, 266, 63));
 
-        btnKaryawan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-karyawan-nonAktif.png"))); // NOI18N
-        btnKaryawan.setBorderPainted(false);
-        btnKaryawan.setContentAreaFilled(false);
-        btnKaryawan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnKaryawan.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-karyawan-hover.png"))); // NOI18N
-        getContentPane().add(btnKaryawan, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 354, 266, 63));
+        btnSideKaryawan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-karyawan-nonAktif.png"))); // NOI18N
+        btnSideKaryawan.setBorderPainted(false);
+        btnSideKaryawan.setContentAreaFilled(false);
+        btnSideKaryawan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSideKaryawan.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-karyawan-hover.png"))); // NOI18N
+        getContentPane().add(btnSideKaryawan, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 354, 266, 63));
 
-        btnMeja.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-meja-nonAktif.png"))); // NOI18N
-        btnMeja.setBorderPainted(false);
-        btnMeja.setContentAreaFilled(false);
-        btnMeja.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnMeja.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-meja-hover.png"))); // NOI18N
-        getContentPane().add(btnMeja, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 427, 266, 63));
+        btnSideMeja.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-meja-nonAktif.png"))); // NOI18N
+        btnSideMeja.setBorderPainted(false);
+        btnSideMeja.setContentAreaFilled(false);
+        btnSideMeja.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSideMeja.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-meja-hover.png"))); // NOI18N
+        getContentPane().add(btnSideMeja, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 427, 266, 63));
 
-        btnPembayaran.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-pembayaran-nonAktif.png"))); // NOI18N
-        btnPembayaran.setBorderPainted(false);
-        btnPembayaran.setContentAreaFilled(false);
-        btnPembayaran.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnPembayaran.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-pembayaran-hover.png"))); // NOI18N
-        getContentPane().add(btnPembayaran, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 499, 266, 63));
+        btnSidePembayaran.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-pembayaran-nonAktif.png"))); // NOI18N
+        btnSidePembayaran.setBorderPainted(false);
+        btnSidePembayaran.setContentAreaFilled(false);
+        btnSidePembayaran.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSidePembayaran.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-pembayaran-hover.png"))); // NOI18N
+        getContentPane().add(btnSidePembayaran, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 499, 266, 63));
 
         jLabel4.setFont(new java.awt.Font("Poppins", 1, 25)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 246, 235));
@@ -191,6 +204,14 @@ public class daftarMenu extends javax.swing.JFrame {
         jLabel6.setText("Owner");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(76, 1000, 43, 20));
 
+        btnKeluar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btnOut.png"))); // NOI18N
+        btnKeluar.setBorder(null);
+        btnKeluar.setBorderPainted(false);
+        btnKeluar.setContentAreaFilled(false);
+        btnKeluar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnKeluar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btnOut-hover.png"))); // NOI18N
+        getContentPane().add(btnKeluar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 983, -1, -1));
+
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/bg-mainMenu.png"))); // NOI18N
         jLabel3.setToolTipText("");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -203,31 +224,52 @@ public class daftarMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_kolomPencarianActionPerformed
 
     public JTable getTblMenu() {
-        return tabel_daftar_menu;
+        return tabelDaftarMenu;
     }
 
     public JTextField getTxtSearch() {
         return kolomPencarian;
     }
 
-    public JButton btn_sidebar_pesanan() {
-        return btnPesanan;
+    public JButton getBtnSidebarBeranda() {
+        return btnSideBeranda;
+    }
+    
+    public JButton getBtnSidebarPesanan() {
+        return btnSidePesanan;
+    }
+
+    public JButton getBtnSidebarKaryawan() {
+        return btnSideKaryawan;
+    }
+    
+    public JButton getBtnSidebarMeja() {
+        return btnSideMeja;
+    }
+    
+    public JButton getBtnSidebarPembayaran() {
+        return btnSidePembayaran;
     }
 
     public JButton getBtnCari() {
         return btnCari;
     }
+
+    public JButton getBtnTambahMenu() {
+        return btnTambahMenu;
+    }
+    
     private void kolomPencarianFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_kolomPencarianFocusGained
-        if (kolomPencarian.getText().equals("Cari Menu")) {
-            kolomPencarian.setText("");
+        if (kolomPencarian.getText().equals(CARI_PLACEHOLDER)) {
+            kolomPencarian.setText(""); // Hapus placeholder
             kolomPencarian.setForeground(java.awt.Color.BLACK);
         }
     }//GEN-LAST:event_kolomPencarianFocusGained
 
     private void kolomPencarianFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_kolomPencarianFocusLost
-        if (kolomPencarian.getText().isEmpty()) {
-            kolomPencarian.setForeground(java.awt.Color.GRAY);
-            kolomPencarian.setText("Cari Menu");
+        if (kolomPencarian.getText().trim().isEmpty()) {
+            kolomPencarian.setText(CARI_PLACEHOLDER); // Tampilkan placeholder
+            kolomPencarian.setForeground(PLACEHOLDER_COLOR);
         }
     }//GEN-LAST:event_kolomPencarianFocusLost
 
@@ -261,13 +303,14 @@ public class daftarMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBeranda;
     private javax.swing.JButton btnCari;
-    private javax.swing.JButton btnDaftarMenu;
-    private javax.swing.JButton btnKaryawan;
-    private javax.swing.JButton btnMeja;
-    private javax.swing.JButton btnPembayaran;
-    private javax.swing.JButton btnPesanan;
+    private javax.swing.JButton btnKeluar;
+    private javax.swing.JButton btnSideBeranda;
+    private javax.swing.JButton btnSideDaftarMenu;
+    private javax.swing.JButton btnSideKaryawan;
+    private javax.swing.JButton btnSideMeja;
+    private javax.swing.JButton btnSidePembayaran;
+    private javax.swing.JButton btnSidePesanan;
     private javax.swing.JButton btnTambahMenu;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -277,6 +320,6 @@ public class daftarMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField kolomPencarian;
-    private javax.swing.JTable tabel_daftar_menu;
+    private javax.swing.JTable tabelDaftarMenu;
     // End of variables declaration//GEN-END:variables
 }

@@ -70,7 +70,7 @@ public class c_produk {
         } catch (Exception ex) {
             System.err.println("Gagal load FlatLaf: " + ex.getMessage());
         }
-        view.btn_sidebar_pesanan().addActionListener(new pesanan_listener());
+//        view.btn_sidebar_pesanan().addActionListener(new pesanan_listener());
     }
 
     public void tampilkanProduk() {

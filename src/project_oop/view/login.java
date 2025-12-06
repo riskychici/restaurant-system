@@ -17,13 +17,30 @@ import javax.swing.JTextField;
  * @author Lorem Ipsum25
  */
 public class login extends javax.swing.JFrame {
+    
+    private final String USER_PLACEHOLDER = "Masukkan Email atau Username Anda";
+    private final String PASS_PLACEHOLDER = "Masukkan Password Anda";
+    private final java.awt.Color PLACEHOLDER_COLOR = new java.awt.Color(153, 153, 153);
 
     /**
      * Creates new form login
      */
     public login() {
         initComponents();
+        getContentPane().requestFocusInWindow();
         this.setLocationRelativeTo(this);
+        setInitialPlaceholder();
+    }
+    
+    private void setInitialPlaceholder() {
+        // Untuk Username
+        username_form.setText(USER_PLACEHOLDER);
+        username_form.setForeground(PLACEHOLDER_COLOR);
+        
+        // Untuk Password
+        password_form.setEchoChar((char) 0);
+        password_form.setText(PASS_PLACEHOLDER);
+        password_form.setForeground(PLACEHOLDER_COLOR);
     }
 
     /**
@@ -35,11 +52,16 @@ public class login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        label_info = new javax.swing.JLabel();
         username_form = new javax.swing.JTextField();
         btn_login = new javax.swing.JButton();
-        label_info = new javax.swing.JLabel();
         password_form = new javax.swing.JPasswordField();
         jLabel2 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -48,9 +70,21 @@ public class login extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(1660, 562));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        label_info.setFont(new java.awt.Font("Poppins", 0, 15)); // NOI18N
+        label_info.setForeground(new java.awt.Color(255, 0, 51));
+        getContentPane().add(label_info, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 631, 370, 20));
+
         username_form.setBackground(new java.awt.Color(252, 250, 248));
         username_form.setFont(new java.awt.Font("Poppins", 0, 18)); // NOI18N
         username_form.setBorder(null);
+        username_form.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                username_formFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                username_formFocusLost(evt);
+            }
+        });
         username_form.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 username_formActionPerformed(evt);
@@ -76,12 +110,17 @@ public class login extends javax.swing.JFrame {
         });
         getContentPane().add(btn_login, new org.netbeans.lib.awtextra.AbsoluteConstraints(595, 700, 510, 63));
 
-        label_info.setForeground(new java.awt.Color(255, 0, 51));
-        getContentPane().add(label_info, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 530, 370, 20));
-
         password_form.setBackground(new java.awt.Color(252, 250, 248));
         password_form.setFont(new java.awt.Font("Poppins", 0, 18)); // NOI18N
         password_form.setBorder(null);
+        password_form.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                password_formFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                password_formFocusLost(evt);
+            }
+        });
         password_form.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 password_formActionPerformed(evt);
@@ -93,6 +132,35 @@ public class login extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("RISKY RESTO");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(725, 236, 254, 60));
+
+        jLabel4.setFont(new java.awt.Font("Poppins Medium", 0, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(125, 125, 125));
+        jLabel4.setText("Email or Username");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(599, 416, 172, 27));
+
+        jLabel5.setFont(new java.awt.Font("Poppins Medium", 0, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(125, 125, 125));
+        jLabel5.setText("Password");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(599, 535, 88, 27));
+
+        jLabel6.setFont(new java.awt.Font("Poppins", 0, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Selamat datang kembali! Harap login ke akun Anda.");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(617, 299, 470, 27));
+
+        jCheckBox1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jCheckBox1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Ingat-saya.png"))); // NOI18N
+        jCheckBox1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Ingat-saya-Hover.png"))); // NOI18N
+        jCheckBox1.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Ingat-saya-Selected.png"))); // NOI18N
+        getContentPane().add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(597, 654, 100, 21));
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Lupa-password.png"))); // NOI18N
+        jButton1.setBorder(null);
+        jButton1.setBorderPainted(false);
+        jButton1.setContentAreaFilled(false);
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Lupa-password-hover.png"))); // NOI18N
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(982, 653, 123, 23));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/form-login.png"))); // NOI18N
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(543, 368, 619, 442));
@@ -114,6 +182,40 @@ public class login extends javax.swing.JFrame {
     private void username_formActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_username_formActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_username_formActionPerformed
+    
+    private void username_formFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_username_formFocusGained
+        if (username_form.getText().equals(USER_PLACEHOLDER)) {
+        username_form.setText(""); // Hapus placeholder
+        username_form.setForeground(java.awt.Color.BLACK); // Ubah warna ke hitam
+        }
+    }//GEN-LAST:event_username_formFocusGained
+
+    private void username_formFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_username_formFocusLost
+        if (username_form.getText().trim().isEmpty()) {
+        username_form.setText(USER_PLACEHOLDER); // Set placeholder kembali
+        username_form.setForeground(PLACEHOLDER_COLOR); // Ubah warna ke abu-abu
+        }
+    }//GEN-LAST:event_username_formFocusLost
+
+    private void password_formFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_password_formFocusGained
+        String passwordText = new String(password_form.getPassword());
+
+        if (passwordText.equals(PASS_PLACEHOLDER)) {
+        password_form.setText(""); // Hapus placeholder
+        password_form.setForeground(java.awt.Color.BLACK); // Ubah warna ke hitam
+        password_form.setEchoChar('•'); // Aktifkan karakter gema (bintang/titik)
+        }
+    }//GEN-LAST:event_password_formFocusGained
+
+    private void password_formFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_password_formFocusLost
+        String passwordText = new String(password_form.getPassword());
+
+        if (passwordText.trim().isEmpty()) {
+        password_form.setEchoChar((char) 0); // Nonaktifkan karakter gema (tampilkan teks normal)
+        password_form.setText(PASS_PLACEHOLDER); // Set placeholder kembali
+        password_form.setForeground(PLACEHOLDER_COLOR); // Ubah warna ke abu-abu
+        }
+    }//GEN-LAST:event_password_formFocusLost
 
     public JButton login_btn() {
         return btn_login;
@@ -130,7 +232,7 @@ public class login extends javax.swing.JFrame {
     public JLabel label_info() {
         return label_info;
     }
-
+    
     /**
      * @param args the command line arguments
      */
@@ -168,9 +270,14 @@ public class login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_login;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel label_info;
     private javax.swing.JPasswordField password_form;
     private javax.swing.JTextField username_form;

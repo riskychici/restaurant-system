@@ -149,12 +149,12 @@ public class ModernTable {
         table.setShowGrid(false);
         table.setIntercellSpacing(new Dimension(6, 0));
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        table.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        table.setFont(new Font("Poppins", Font.PLAIN, 14));
         table.setForeground(new Color(51, 65, 85));
 
         // Header
         JTableHeader header = table.getTableHeader();
-        header.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        header.setFont(new Font("Poppins", Font.BOLD, 14));
         header.setBackground(new Color(248, 250, 252));
         header.setForeground(new Color(71, 85, 105));
         header.setBorder(BorderFactory.createCompoundBorder(
@@ -210,6 +210,7 @@ public class ModernTable {
         NUMBER, // Nomor urut
         TEXT, // Text biasa
         MULTI_LINE, // Text multi-line dengan badge
+        CATEGORY, // Kategori menu
         PRICE, // Format harga dengan diskon
         STOCK, // Stok dengan status
         ACTIONS           // Tombol aksi
@@ -302,6 +303,9 @@ public class ModernTable {
                 case MULTI_LINE:
                     renderMultiLine(val);
                     break;
+                case CATEGORY:
+                    renderCategory(val);
+                    break;
                 case PRICE:
                     renderPrice(val);
                     break;
@@ -338,14 +342,14 @@ public class ModernTable {
         private void renderNumber(Object val) {
             setLayout(new FlowLayout(FlowLayout.CENTER, 0, 20));
             JLabel lbl = new JLabel(val != null ? val.toString() : "");
-            lbl.setFont(new Font("Segoe UI", Font.BOLD, 15));
+            lbl.setFont(new Font("Poppins", Font.BOLD, 15));
             lbl.setForeground(new Color(100, 116, 139));
             add(lbl);
         }
 
         private void renderText(Object val) {
             JLabel lbl = new JLabel(val != null ? val.toString() : "");
-            lbl.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+            lbl.setFont(new Font("Poppins", Font.PLAIN, 13));
             lbl.setForeground(new Color(30, 41, 59));
             lbl.setAlignmentX(Component.LEFT_ALIGNMENT);
             add(Box.createVerticalStrut(15));
@@ -370,18 +374,46 @@ public class ModernTable {
                 add(Box.createVerticalStrut(5));
 
                 JLabel lblNama = new JLabel(nama);
-                lblNama.setFont(new Font("Segoe UI", Font.BOLD, 13));
-                lblNama.setForeground(new Color(15, 23, 42));
+                lblNama.setFont(new Font("Poppins", Font.BOLD, 15));
+                lblNama.setForeground(new Color(55, 55, 55));
                 lblNama.setAlignmentX(Component.LEFT_ALIGNMENT);
                 add(lblNama);
 
             }
         }
 
+        private JLabel createCategoryBadge(String text) {
+            JLabel badge = new JLabel(text);
+            badge.setFont(new Font("Poppins", Font.BOLD, 12));
+            badge.setForeground(new Color(51, 65, 85)); 
+            badge.setBackground(new Color(225,225,225)); 
+            badge.setOpaque(true);
+            badge.setBorder(BorderFactory.createCompoundBorder(
+                    BorderFactory.createLineBorder(new Color(203, 213, 225), 1),
+                    BorderFactory.createEmptyBorder(6, 12, 6, 12)
+            ));
+            badge.setAlignmentX(Component.LEFT_ALIGNMENT);
+            badge.setAlignmentY(Component.CENTER_ALIGNMENT);
+            return badge;
+        }
+
+        private void renderCategory(Object val) {
+            String text = val != null ? val.toString() : "";
+
+            if (text.isEmpty() || text.equals("null")) {
+                // Tampilkan placeholder jika kosong
+                add(Box.createVerticalStrut(15));
+                add(new JLabel("-")); 
+            } else {
+                // Tampilkan sebagai badge
+                add(createBadge(text, new Color(241, 245, 249), new Color(100, 116, 139)));
+            }
+        }
+
         private void renderPrice(Object val) {
             if (val instanceof String[]) {
                 String[] prices = (String[]) val;
-                String hargaAsli = prices[0];
+                String hargaAsli = "" + prices[0];
                 String hargaDiskon = prices.length > 1 ? prices[1] : "";
                 String diskon = prices.length > 2 ? prices[2] : "";
 
@@ -392,7 +424,7 @@ public class ModernTable {
                     topPanel.setOpaque(false);
 
                     JLabel lblAsli = new JLabel("<html><strike>" + hargaAsli + "</strike></html>");
-                    lblAsli.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+                    lblAsli.setFont(new Font("Poppins", Font.PLAIN, 11));
                     lblAsli.setForeground(new Color(148, 163, 184));
                     topPanel.add(lblAsli);
 
@@ -406,15 +438,15 @@ public class ModernTable {
                     add(Box.createVerticalStrut(4));
 
                     JLabel lblDiskon = new JLabel(hargaDiskon);
-                    lblDiskon.setFont(new Font("Segoe UI", Font.BOLD, 16));
+                    lblDiskon.setFont(new Font("Poppins", Font.BOLD, 16));
                     lblDiskon.setForeground(new Color(220, 38, 38));
                     lblDiskon.setAlignmentX(Component.LEFT_ALIGNMENT);
                     add(lblDiskon);
                 } else {
                     add(Box.createVerticalStrut(10));
                     JLabel lblNormal = new JLabel(!hargaAsli.isEmpty() ? hargaAsli : "Rp 0");
-                    lblNormal.setFont(new Font("Segoe UI", Font.BOLD, 16));
-                    lblNormal.setForeground(new Color(15, 23, 42));
+                    lblNormal.setFont(new Font("Poppins", Font.BOLD, 15));
+                    lblNormal.setForeground(new Color(70, 70, 70));
                     lblNormal.setAlignmentX(Component.LEFT_ALIGNMENT);
                     add(lblNormal);
                 }
@@ -429,14 +461,14 @@ public class ModernTable {
                 int stok = Integer.parseInt(stokText);
 
                 JLabel lblStok = new JLabel(stokText);
-                lblStok.setFont(new Font("Segoe UI", Font.BOLD, 20));
+                lblStok.setFont(new Font("Poppins", Font.BOLD, 20));
                 lblStok.setAlignmentX(Component.CENTER_ALIGNMENT);
 
                 JLabel lblStatus = new JLabel();
-                lblStatus.setFont(new Font("Segoe UI", Font.BOLD, 9));
+                lblStatus.setFont(new Font("Poppins", Font.BOLD, 11));
                 lblStatus.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-                if (stok > 10) {
+                if (stok > 15) {
                     lblStok.setForeground(new Color(22, 163, 74));
                     lblStatus.setText("TERSEDIA");
                     lblStatus.setForeground(new Color(22, 163, 74));
@@ -456,16 +488,18 @@ public class ModernTable {
                 add(lblStatus);
             } catch (NumberFormatException e) {
                 JLabel lbl = new JLabel(stokText);
-                lbl.setFont(new Font("Segoe UI", Font.BOLD, 16));
+                lbl.setFont(new Font("Poppins", Font.BOLD, 16));
                 lbl.setForeground(new Color(100, 116, 139));
                 lbl.setAlignmentX(Component.CENTER_ALIGNMENT);
                 add(Box.createVerticalStrut(15));
                 add(lbl);
             }
         }
+        
+        
 
         private void renderActions() {
-            setLayout(new FlowLayout(FlowLayout.CENTER, 4, 15));
+            setLayout(new FlowLayout(FlowLayout.CENTER, 4, 7));
             for (ActionButton btn : actionButtons) {
                 add(createButton(btn.label, btn.color));
             }
@@ -473,7 +507,7 @@ public class ModernTable {
 
         private JLabel createBadge(String text, Color bg, Color fg) {
             JLabel badge = new JLabel(text);
-            badge.setFont(new Font("Segoe UI", Font.BOLD, 9));
+            badge.setFont(new Font("Poppins", Font.BOLD, 12));
             badge.setForeground(fg);
             badge.setBackground(bg);
             badge.setOpaque(true);
@@ -486,7 +520,7 @@ public class ModernTable {
 
         private JButton createButton(String text, Color color) {
             JButton btn = new JButton(text);
-            btn.setFont(new Font("Segoe UI", Font.BOLD, 10));
+            btn.setFont(new Font("Poppins", Font.BOLD, 10));
             btn.setForeground(Color.WHITE);
             btn.setBackground(color);
             btn.setFocusPainted(false);
@@ -550,7 +584,7 @@ public class ModernTable {
 
         private JButton createButton(String text, Color color) {
             JButton btn = new JButton(text);
-            btn.setFont(new Font("Segoe UI", Font.BOLD, 10));
+            btn.setFont(new Font("Poppins", Font.BOLD, 10));
             btn.setForeground(Color.WHITE);
             btn.setBackground(color);
             btn.setFocusPainted(false);
