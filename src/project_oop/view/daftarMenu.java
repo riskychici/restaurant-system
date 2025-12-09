@@ -112,6 +112,7 @@ public class daftarMenu extends javax.swing.JFrame {
         });
         getContentPane().add(btnCari, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 156, 100, 45));
 
+        kolomPencarian.setBackground(new java.awt.Color(252, 250, 248));
         kolomPencarian.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
         kolomPencarian.setToolTipText("");
         kolomPencarian.setBorder(null);

@@ -349,8 +349,8 @@ public class ModernTable {
 
         private void renderText(Object val) {
             JLabel lbl = new JLabel(val != null ? val.toString() : "");
-            lbl.setFont(new Font("Poppins", Font.PLAIN, 13));
-            lbl.setForeground(new Color(30, 41, 59));
+            lbl.setFont(new Font("Poppins", Font.BOLD, 15));
+            lbl.setForeground(new Color(55, 55, 55));
             lbl.setAlignmentX(Component.LEFT_ALIGNMENT);
             add(Box.createVerticalStrut(15));
             add(lbl);

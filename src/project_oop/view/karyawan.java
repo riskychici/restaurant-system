@@ -112,6 +112,7 @@ public class karyawan extends javax.swing.JFrame {
         });
         getContentPane().add(btnCari, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 156, 100, 45));
 
+        kolomPencarian.setBackground(new java.awt.Color(252, 250, 248));
         kolomPencarian.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
         kolomPencarian.setToolTipText("");
         kolomPencarian.setBorder(null);
@@ -147,7 +148,7 @@ public class karyawan extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Poppins SemiBold", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(76, 54, 35));
-        jLabel1.setText("Daftar Karyawan");
+        jLabel1.setText("Karyawan");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(328, 73, 221, 36));
 
         jLabel2.setFont(new java.awt.Font("Poppins SemiBold", 0, 14)); // NOI18N
@@ -257,6 +258,10 @@ public class karyawan extends javax.swing.JFrame {
 
     public JButton getBtnTambahMenu() {
         return btnTambahMenu;
+    }
+    
+    public JButton getBtnKeluar() {
+        return btnKeluar;
     }
     
     private void kolomPencarianFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_kolomPencarianFocusGained

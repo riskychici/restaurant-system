@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import project_oop.model.m_daftarMenu;
+import project_oop.model.m_karyawan;
 import project_oop.view.beranda;
 import project_oop.view.daftarMenu;
 import project_oop.view.karyawan;
@@ -22,11 +23,11 @@ import style_table.ModernTable;
 /**
  * Controller untuk mengelola Daftar Menu
  */
-public class c_daftarMenu {
+public class c_karyawan {
 
     // ==================== ATTRIBUT ====================
     // Model
-    private m_daftarMenu model;
+    private m_karyawan model;
 
     // View
     private beranda view;
@@ -38,7 +39,7 @@ public class c_daftarMenu {
     private login view7;
 
     // ==================== CONSTRUCTOR ====================
-    public c_daftarMenu() throws SQLException {
+    public c_karyawan() throws SQLException {
         inisialisasiTemaDanTabel();
         inisialisasiKomponen();
         aturEventListeners();
@@ -61,27 +62,27 @@ public class c_daftarMenu {
     }
 
     private void inisialisasiKomponen() throws SQLException {
-        this.model = new m_daftarMenu();
+        this.model = new m_karyawan();
         this.view = new beranda();
         this.view2 = new pesanan();
         this.view3 = new daftarMenu();
         this.view4 = new karyawan();
-        this.view3.setVisible(true);
+        this.view4.setVisible(true);
     }
 
     private void aturEventListeners() {
-        view3.getBtnCari().addActionListener(e -> tampilkanDaftarMenu());
-        view3.getBtnSidebarBeranda().addActionListener(new btnSidebarBeranda());
-        view3.getBtnSidebarPesanan().addActionListener(new btnSidebarPesanan());
-        view3.getBtnKeluar().addActionListener(new btnKeluar());
-        view3.getBtnSidebarKaryawan().addActionListener(new btnSidebarKaryawan());
+        view4.getBtnCari().addActionListener(e -> tampilkanDaftarMenu());
+        view4.getBtnSidebarBeranda().addActionListener(new btnSidebarBeranda());
+        view4.getBtnSidebarPesanan().addActionListener(new btnSidebarPesanan());
+        view4.getBtnSidebarDaftarMenu().addActionListener(new btnSidebarDaftarMenu());
+        view4.getBtnKeluar().addActionListener(new btnKeluar());
     }
 
     // ==================== METHOD TAMPILAN ====================
     public void tampilkanDaftarMenu() {
         try {
-            String search = view3.getTxtSearch().getText().trim();
-            List<Object[]> dataFromDB = model.getDaftarMenu(search);
+            String search = view4.getTxtSearch().getText().trim();
+            List<Object[]> dataFromDB = model.getKaryawan(search);
             List<Object[]> transformedData = transformDataForTable(dataFromDB);
             renderTable(transformedData);
         } catch (SQLException ex) {
@@ -93,7 +94,7 @@ public class c_daftarMenu {
         List<Object[]> transformedData = new ArrayList<>();
 
         for (Object[] row : dataFromDB) {
-            Object[] newRow = new Object[6];
+            Object[] newRow = new Object[5];
 
             // Kolom 0: ID
             newRow[0] = row[0];
@@ -108,13 +109,10 @@ public class c_daftarMenu {
 
             // Kolom 3: Harga
             String harga = row[3] != null ? row[3].toString() : "";
-            newRow[3] = new String[]{"Rp " + harga};
-
-            // Kolom 4: Stok
-            newRow[4] = row[4] != null ? row[4].toString() : "0";
+            newRow[3] = new String[]{harga};
 
             // Kolom 5: Aksi
-            newRow[5] = "";
+            newRow[4] = "";
 
             transformedData.add(newRow);
         }
@@ -123,15 +121,14 @@ public class c_daftarMenu {
     }
 
     private void renderTable(List<Object[]> data) {
-        new ModernTable(view3.getTblMenu())
-                .setColumns(new String[]{"No", "ID", "Menu", "Kategori", "Harga", "Stok", "Aksi"})
+        new ModernTable(view4.getTblKaryawan())
+                .setColumns(new String[]{"No", "ID", "Nama", "No Telp", "Role", "Aksi"})
                 .hideColumn(1)
                 .configureColumn(0, ModernTable.ColumnType.NUMBER, 50)
                 .configureColumn(2, ModernTable.ColumnType.MULTI_LINE, 300)
-                .configureColumn(3, ModernTable.ColumnType.CATEGORY, 120)
+                .configureColumn(3, ModernTable.ColumnType.TEXT, 50)
                 .configureColumn(4, ModernTable.ColumnType.PRICE, 180)
-                .configureColumn(5, ModernTable.ColumnType.STOCK, 90)
-                .configureColumn(6, ModernTable.ColumnType.ACTIONS, 230)
+                .configureColumn(5, ModernTable.ColumnType.ACTIONS, 230)
                 .setRowHeight(70)
                 .addActionButton("Detail", new Color(59, 130, 246), this::handleDetailAction)
                 .addActionButton("Edit", new Color(251, 146, 60), this::handleEditAction)
@@ -154,7 +151,7 @@ public class c_daftarMenu {
     private void handleDeleteAction(int row, Object[] rowData) {
         String id = rowData[1].toString();
         int confirm = JOptionPane.showConfirmDialog(
-                view3,
+                view4,
                 "Yakin ingin menghapus produk?",
                 "Konfirmasi",
                 JOptionPane.YES_NO_OPTION
@@ -162,7 +159,7 @@ public class c_daftarMenu {
 
         if (confirm == JOptionPane.YES_OPTION) {
             try {
-                model.hapusMenu(id);
+                model.hapusKaryawan(id);
                 showSuccess("Produk berhasil dihapus!");
                 tampilkanDaftarMenu();
             } catch (Exception e) {
@@ -172,22 +169,22 @@ public class c_daftarMenu {
     }
 
     private void tampilDetail(String id) {
-        JOptionPane.showMessageDialog(view3, "Detail Produk ID: " + id);
+        JOptionPane.showMessageDialog(view4, "Detail Produk ID: " + id);
         System.out.println("Detail produk: " + id);
     }
 
     private void editMenu(String id) {
-        JOptionPane.showMessageDialog(view3, "Edit Produk ID: " + id);
+        JOptionPane.showMessageDialog(view4, "Edit Produk ID: " + id);
         System.out.println("Edit produk: " + id);
     }
 
     // ==================== METHOD DIALOG PESAN ====================
     private void showError(String message) {
-        JOptionPane.showMessageDialog(view3, message, "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(view4, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     private void showSuccess(String message) {
-        JOptionPane.showMessageDialog(view3, message, "Sukses", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(view4, message, "Sukses", JOptionPane.INFORMATION_MESSAGE);
     }
 
     // ==================== BAGIAN UNTUK MENGATUR AKSI TOMBOL ====================
@@ -197,7 +194,7 @@ public class c_daftarMenu {
         public void actionPerformed(ActionEvent e) {
             try {
                 new c_pesanan();
-                view3.dispose();
+                view4.dispose();
             } catch (SQLException ex) {
                 System.getLogger(c_pesanan.class.getName())
                         .log(System.Logger.Level.ERROR, "Kesalahan navigasi ke Beranda", ex);
@@ -211,7 +208,7 @@ public class c_daftarMenu {
         public void actionPerformed(ActionEvent e) {
             try {
                 new c_pesanan();
-                view3.dispose();
+                view4.dispose();
             } catch (SQLException ex) {
                 System.getLogger(c_pesanan.class.getName())
                         .log(System.Logger.Level.ERROR, "Kesalahan navigasi ke Pesanan", ex);
@@ -219,13 +216,13 @@ public class c_daftarMenu {
         }
     }
     
-    private class btnSidebarKaryawan implements ActionListener {
+    private class btnSidebarDaftarMenu implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                new c_karyawan();
-                view3.dispose();
+                new c_daftarMenu();
+                view4.dispose();
             } catch (SQLException ex) {
                 System.getLogger(c_pesanan.class.getName())
                         .log(System.Logger.Level.ERROR, "Kesalahan navigasi ke Pesanan", ex);
@@ -238,7 +235,7 @@ public class c_daftarMenu {
         @Override
         public void actionPerformed(ActionEvent e) {
             int konfirmasi = JOptionPane.showConfirmDialog(
-                    view3,
+                    view4,
                     "Apakah kamu yakin ingin keluar dari akun ini?",
                     "Konfirmasi Keluar",
                     JOptionPane.YES_NO_OPTION
@@ -247,7 +244,7 @@ public class c_daftarMenu {
             if (konfirmasi == JOptionPane.YES_OPTION) {
                 try {
                     new c_user();
-                    view3.dispose();
+                    view4.dispose();
                 } catch (Exception ex) {
                     System.err.println("Gagal navigasi ke Login: " + ex.getMessage());
                 }

@@ -122,6 +122,9 @@
     </Component>
     <Component class="javax.swing.JTextField" name="kolomPencarian">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="f8" green="fa" red="fc" type="rgb"/>
+        </Property>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Poppins Medium" size="14" style="0"/>
         </Property>

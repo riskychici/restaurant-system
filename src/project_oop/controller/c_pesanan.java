@@ -66,6 +66,7 @@ public class c_pesanan {
         this.view = new beranda();
         this.view2 = new pesanan();
         this.view3 = new daftarMenu();
+        this.view4 = new karyawan();
         this.view2.setVisible(true);
     }
 
@@ -73,13 +74,14 @@ public class c_pesanan {
         view2.getBtnCari().addActionListener(e -> tampilkanPesanan());
         view2.getBtnSidebarBeranda().addActionListener(new btnSidebarBeranda());
         view2.getBtnSidebarDaftarMenu().addActionListener(new btnSidebarDaftarMenu());
+        view2.getBtnSidebarKaryawan().addActionListener(new btnSidebarKaryawan());
         view2.getBtnKeluar().addActionListener(new btnKeluar());
     }
 
     // ==================== METHOD TAMPILAN ====================
     public void tampilkanPesanan() {
         try {
-            String search = view3.getTxtSearch().getText().trim();
+            String search = view2.getTxtSearch().getText().trim();
             List<Object[]> dataFromDB = model.getPesanan(search);
             List<Object[]> transformedData = transformDataForTable(dataFromDB);
             renderTable(transformedData);
@@ -210,6 +212,20 @@ public class c_pesanan {
         public void actionPerformed(ActionEvent e) {
             try {
                 new c_daftarMenu();
+                view2.dispose();
+            } catch (SQLException ex) {
+                System.getLogger(c_pesanan.class.getName())
+                        .log(System.Logger.Level.ERROR, "Kesalahan navigasi ke Pesanan", ex);
+            }
+        }
+    }
+    
+    private class btnSidebarKaryawan implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                new c_karyawan();
                 view2.dispose();
             } catch (SQLException ex) {
                 System.getLogger(c_pesanan.class.getName())
