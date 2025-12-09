@@ -37,7 +37,7 @@ public class m_pesanan {
         return data;
     }
 
-    public void hapusProduk(String id) {
+    public void hapusPesanan(String id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

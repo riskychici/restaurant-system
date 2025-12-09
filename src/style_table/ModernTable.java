@@ -385,8 +385,8 @@ public class ModernTable {
         private JLabel createCategoryBadge(String text) {
             JLabel badge = new JLabel(text);
             badge.setFont(new Font("Poppins", Font.BOLD, 12));
-            badge.setForeground(new Color(51, 65, 85)); 
-            badge.setBackground(new Color(225,225,225)); 
+            badge.setForeground(new Color(51, 65, 85));
+            badge.setBackground(new Color(225, 225, 225));
             badge.setOpaque(true);
             badge.setBorder(BorderFactory.createCompoundBorder(
                     BorderFactory.createLineBorder(new Color(203, 213, 225), 1),
@@ -403,7 +403,7 @@ public class ModernTable {
             if (text.isEmpty() || text.equals("null")) {
                 // Tampilkan placeholder jika kosong
                 add(Box.createVerticalStrut(15));
-                add(new JLabel("-")); 
+                add(new JLabel("-"));
             } else {
                 // Tampilkan sebagai badge
                 add(createBadge(text, new Color(241, 245, 249), new Color(100, 116, 139)));
@@ -495,8 +495,6 @@ public class ModernTable {
                 add(lbl);
             }
         }
-        
-        
 
         private void renderActions() {
             setLayout(new FlowLayout(FlowLayout.CENTER, 4, 7));

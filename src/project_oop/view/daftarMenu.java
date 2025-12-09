@@ -259,6 +259,10 @@ public class daftarMenu extends javax.swing.JFrame {
         return btnTambahMenu;
     }
     
+    public JButton getBtnKeluar() {
+        return btnKeluar;
+    }
+    
     private void kolomPencarianFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_kolomPencarianFocusGained
         if (kolomPencarian.getText().equals(CARI_PLACEHOLDER)) {
             kolomPencarian.setText(""); // Hapus placeholder
