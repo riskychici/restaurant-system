@@ -104,15 +104,15 @@ public class c_meja {
             // Kolom 0: ID
             newRow[0] = row[0];
 
-            // Kolom 1: Nama Menu
+            // Kolom 1: Nomor Meja
             String nomorMeja = row[1] != null ? row[1].toString() : "";
             newRow[1] = new Object[]{"", nomorMeja};
 
-            // Kolom 2: Kategori
+            // Kolom 2: Kapasitas
             String kapasitas = row[2] != null ? row[2].toString() : "";
             newRow[2] = kapasitas;
 
-            // Kolom 3: Harga
+            // Kolom 3: Status Meja
             String statusMeja = row[3] != null ? row[3].toString() : "";
             newRow[3] = new String[]{statusMeja};
 
@@ -157,7 +157,6 @@ public class c_meja {
     private void handleEditAction(int row, Object[] rowData) {
         try {
             int id = Integer.parseInt(rowData[1].toString());
-            // Ambil detail terbaru dari database sebelum edit
             Object[] detail = model.getDetailMeja(id);
 
             if (detail != null) {
@@ -175,7 +174,7 @@ public class c_meja {
                         } else {
                             showSuccess(pesan);
                             dialog.dispose();
-                            tampilkanDaftarMeja(); // Refresh tabel
+                            tampilkanDaftarMeja();
                         }
                     } catch (SQLException ex) {
                         showError("Gagal update: " + ex.getMessage());
@@ -204,14 +203,13 @@ public class c_meja {
 
         if (confirm == JOptionPane.YES_OPTION) {
             try {
-                // Panggil model hapusMeja
                 String pesan = model.hapusMeja(id);
 
                 if (pesan.contains("GAGAL")) {
                     showError(pesan);
                 } else {
                     showSuccess(pesan);
-                    tampilkanDaftarMeja(); // Refresh tabel
+                    tampilkanDaftarMeja();
                 }
             } catch (SQLException e) {
                 showError("Gagal menghapus meja: " + e.getMessage());
@@ -225,26 +223,23 @@ public class c_meja {
             Object[] detail = model.getDetailMeja(idMeja);
 
             if (detail != null) {
-                StringBuilder sb = new StringBuilder();
-                sb.append("===== INFORMASI MEJA =====\n");
-                sb.append("ID Meja      : ").append(detail[0]).append("\n");
-                sb.append("Nomor Meja   : ").append(detail[1]).append("\n");
-                sb.append("Kapasitas    : ").append(detail[2]).append(" Orang\n");
-                sb.append("Status Meja  : ").append(detail[3]).append("\n");
+                String nomor = detail[1].toString();
+                int kapasitas = Integer.parseInt(detail[2].toString());
+                String status = detail[3].toString();
+                String pelanggan = (detail[4] != null) ? detail[4].toString() : null;
+                String jamMasuk = (detail[5] != null) ? detail[5].toString() : null;
 
-                // Jika nama_pelanggan ada, berarti meja terisi
-                if (detail[4] != null) {
-                    sb.append("\n==== AKTIVITAS SAAT INI ====\n");
-                    sb.append("Nama Pelanggan : ").append(detail[4]).append("\n");
-                    sb.append("Jam Masuk      : ").append(detail[5]).append("\n");
-                } else {
-                    sb.append("\nKeterangan: Meja ini tidak digunakan.");
-                }
+                formMejaDialog dialog = new formMejaDialog(view5, idMeja, nomor, kapasitas);
 
-                JOptionPane.showMessageDialog(view5, sb.toString(), "Detail Meja " + detail[1], JOptionPane.INFORMATION_MESSAGE);
+                dialog.setDataDetail(status, pelanggan, jamMasuk);
+
+                dialog.setDetailMode();
+
+                dialog.setVisible(true);
             }
         } catch (Exception e) {
             showError("Gagal menampilkan detail: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -290,7 +285,6 @@ public class c_meja {
             }
 
             try {
-                // Memanggil model yang sudah memakai Function
                 String pesan = model.tambahMeja(nomor, kapasitas);
 
                 if (pesan.contains("GAGAL")) {
@@ -298,7 +292,7 @@ public class c_meja {
                 } else {
                     showSuccess(pesan);
                     dialog.dispose();
-                    tampilkanDaftarMeja(); // Refresh tabel biar meja baru muncul
+                    tampilkanDaftarMeja();
                 }
             } catch (SQLException ex) {
                 showError("Terjadi kesalahan database: " + ex.getMessage());

@@ -19,6 +19,7 @@ import project_oop.view.pembayaran;
 import project_oop.view.pesanan;
 import project_oop.view.login;
 import style_table.ModernTable;
+import project_oop.view.formKaryawanDialog;
 
 /**
  * Controller untuk mengelola Daftar Menu
@@ -77,6 +78,7 @@ public class c_karyawan {
         view4.getBtnSidebarDaftarMenu().addActionListener(new btnSidebarDaftarMenu());
         view4.getBtnSidebarMeja().addActionListener(new btnSidebarMeja());
         view4.getBtnKeluar().addActionListener(new btnKeluar());
+        view4.getBtnTambahKaryawan().addActionListener(e -> handleTambahKaryawan());
     }
 
     // ==================== METHOD TAMPILAN ====================
@@ -100,17 +102,17 @@ public class c_karyawan {
             // Kolom 0: ID
             newRow[0] = row[0];
 
-            // Kolom 1: Nama Menu
+            // Kolom 1: Nama Karyawan
             String nama = row[1] != null ? row[1].toString() : "";
             newRow[1] = new Object[]{"", nama};
 
-            // Kolom 2: Kategori
-            String kategori = row[2] != null ? row[2].toString() : "";
-            newRow[2] = kategori;
+            // Kolom 2: No Telepon
+            String noTelp = row[2] != null ? row[2].toString() : "";
+            newRow[2] = noTelp;
 
-            // Kolom 3: Harga
-            String harga = row[3] != null ? row[3].toString() : "";
-            newRow[3] = new String[]{harga};
+            // Kolom 3: Role
+            String role = row[3] != null ? row[3].toString() : "";
+            newRow[3] = new String[]{role};
 
             // Kolom 5: Aksi
             newRow[4] = "";
@@ -139,32 +141,193 @@ public class c_karyawan {
     }
 
     // ==================== HANDLER TOMBOL AKSI (Detail, Edit, Hapus) ====================
+    private void handleTambahKaryawan() {
+        try {
+            List<String> roles = model.ambilRoles();
+
+            formKaryawanDialog dialog = new formKaryawanDialog(view4, roles);
+
+            dialog.getBtnSimpan().addActionListener(event -> {
+                String nama = dialog.getNama();
+                String noTelp = dialog.getNoTelp();
+                int idRole = dialog.getIdRole();
+
+                if (nama.isEmpty() || noTelp.isEmpty()) {
+                    showError("Nama dan Nomor Telepon wajib diisi!");
+                    return;
+                }
+
+                try {
+                    String hasil = model.tambahKaryawan(nama, noTelp, idRole);
+
+                    if (hasil.startsWith("GAGAL")) {
+                        showError(hasil);
+                    } else {
+                        showSuccess(hasil);
+                        dialog.dispose();
+                        tampilkanDaftarMenu();
+                    }
+                } catch (SQLException ex) {
+                    showError("Gagal menyimpan ke database: " + ex.getMessage());
+                }
+            });
+
+            dialog.setVisible(true);
+
+        } catch (SQLException ex) {
+            showError("Gagal memuat data Role: " + ex.getMessage());
+        }
+    }
+
     private void handleDetailAction(int row, Object[] rowData) {
-        String id = rowData[1].toString();
-        tampilDetail(id);
+        try {
+            String id = rowData[1].toString();
+
+            String nama = "";
+            if (rowData[2] instanceof Object[]) {
+                Object[] nameData = (Object[]) rowData[2];
+                nama = (nameData.length > 1) ? nameData[1].toString() : nameData[0].toString();
+            } else {
+                nama = rowData[2].toString();
+            }
+
+            String noTelp = rowData[3].toString();
+
+            String roleStr = "";
+            if (rowData[4] instanceof Object[]) {
+                Object[] roleData = (Object[]) rowData[4];
+                roleStr = (roleData.length > 1) ? roleData[1].toString() : roleData[0].toString();
+            } else {
+                roleStr = rowData[4].toString();
+            }
+
+            int idRole = 0;
+            if (roleStr.contains(" - ")) {
+                idRole = Integer.parseInt(roleStr.split(" - ")[0]);
+            } else {
+                idRole = cariIdRoleDariNama(roleStr);
+            }
+
+            List<String> roles = model.ambilRoles();
+            formKaryawanDialog dialog = new formKaryawanDialog(view4, roles);
+
+            dialog.setData(id, nama, noTelp, idRole);
+            dialog.setDetailMode();
+            dialog.setVisible(true);
+
+        } catch (Exception ex) {
+            showError("Gagal memuat detail: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
+
+    private int cariIdRoleDariNama(String namaRole) {
+        try {
+            List<String> roles = model.ambilRoles();
+            for (String r : roles) {
+                if (r.toLowerCase().contains(namaRole.toLowerCase())) {
+                    return Integer.parseInt(r.split(" - ")[0]);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     private void handleEditAction(int row, Object[] rowData) {
-        String id = rowData[1].toString();
-        editMenu(id);
+        try {
+            String id = rowData[1].toString();
+
+            String nama = "";
+            if (rowData[2] instanceof Object[]) {
+                Object[] nameData = (Object[]) rowData[2];
+                nama = (nameData.length > 1) ? nameData[1].toString() : nameData[0].toString();
+            } else {
+                nama = rowData[2].toString();
+            }
+
+            String noTelp = rowData[3].toString();
+
+            String roleStr = "";
+            if (rowData[4] instanceof Object[]) {
+                Object[] roleData = (Object[]) rowData[4];
+                roleStr = (roleData.length > 1) ? roleData[1].toString() : roleData[0].toString();
+            } else {
+                roleStr = rowData[4].toString();
+            }
+
+            int idRole;
+            if (roleStr.contains(" - ")) {
+                idRole = Integer.parseInt(roleStr.split(" - ")[0]);
+            } else {
+                try {
+                    idRole = Integer.parseInt(roleStr.trim());
+                } catch (NumberFormatException e) {
+                    idRole = 0;
+                }
+            }
+
+            List<String> roles = model.ambilRoles();
+            formKaryawanDialog dialog = new formKaryawanDialog(view4, roles);
+            dialog.setData(id, nama, noTelp, idRole);
+
+            dialog.getBtnSimpan().addActionListener(e -> {
+                try {
+                    String hasil = model.updateKaryawan(
+                            dialog.getIdKaryawan(),
+                            dialog.getNama(),
+                            dialog.getNoTelp(),
+                            dialog.getIdRole()
+                    );
+
+                    if (hasil.startsWith("GAGAL")) {
+                        showError(hasil);
+                    } else {
+                        showSuccess(hasil);
+                        dialog.dispose();
+                        tampilkanDaftarMenu();
+                    }
+                } catch (SQLException ex) {
+                    showError("Gagal Update: " + ex.getMessage());
+                }
+            });
+
+            dialog.setVisible(true);
+        } catch (Exception ex) {
+            showError("Terjadi kesalahan: " + ex.getMessage());
+            ex.printStackTrace();
+        }
     }
 
     private void handleDeleteAction(int row, Object[] rowData) {
         String id = rowData[1].toString();
-        int confirm = JOptionPane.showConfirmDialog(
-                view4,
-                "Yakin ingin menghapus produk?",
-                "Konfirmasi",
-                JOptionPane.YES_NO_OPTION
-        );
+
+        String nama = "";
+        if (rowData[2] instanceof Object[]) {
+            Object[] nameData = (Object[]) rowData[2];
+            nama = (nameData.length > 1) ? nameData[1].toString() : nameData[0].toString();
+        } else {
+            nama = rowData[2].toString();
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(view4,
+                "Apakah Anda yakin ingin menghapus karyawan: " + nama + "?",
+                "Konfirmasi Hapus",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE);
 
         if (confirm == JOptionPane.YES_OPTION) {
             try {
-                model.hapusKaryawan(id);
-                showSuccess("Produk berhasil dihapus!");
-                tampilkanDaftarMenu();
-            } catch (Exception e) {
-                showError("Gagal menghapus produk: " + e.getMessage());
+                String hasil = model.hapusKaryawan(id);
+                if (hasil.startsWith("Berhasil")) {
+                    showSuccess(hasil);
+                    tampilkanDaftarMenu();
+                } else {
+                    showError(hasil);
+                }
+            } catch (SQLException ex) {
+                showError("Gagal menghapus: " + ex.getMessage());
             }
         }
     }
@@ -216,7 +379,7 @@ public class c_karyawan {
             }
         }
     }
-    
+
     private class btnSidebarMeja implements ActionListener {
 
         @Override
@@ -230,7 +393,7 @@ public class c_karyawan {
             }
         }
     }
-    
+
     private class btnSidebarDaftarMenu implements ActionListener {
 
         @Override
