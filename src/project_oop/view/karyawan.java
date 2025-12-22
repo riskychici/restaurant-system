@@ -49,7 +49,6 @@ public class karyawan extends javax.swing.JFrame {
         tabelDaftarKaryawan = new javax.swing.JTable();
         btnCari = new javax.swing.JButton();
         kolomPencarian = new javax.swing.JTextField();
-        btnTambahMenu = new javax.swing.JButton();
         btnSideBeranda = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -62,6 +61,7 @@ public class karyawan extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         btnKeluar = new javax.swing.JButton();
+        btnTambahKaryawan = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -130,13 +130,6 @@ public class karyawan extends javax.swing.JFrame {
             }
         });
         getContentPane().add(kolomPencarian, new org.netbeans.lib.awtextra.AbsoluteConstraints(335, 161, 265, 35));
-
-        btnTambahMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-tambahMenu.png"))); // NOI18N
-        btnTambahMenu.setBorderPainted(false);
-        btnTambahMenu.setContentAreaFilled(false);
-        btnTambahMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnTambahMenu.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-tambahMenu-hover.png"))); // NOI18N
-        getContentPane().add(btnTambahMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(1500, 59, 160, 51));
 
         btnSideBeranda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-beranda-nonAktif.png"))); // NOI18N
         btnSideBeranda.setBorderPainted(false);
@@ -213,6 +206,13 @@ public class karyawan extends javax.swing.JFrame {
         btnKeluar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btnOut-hover.png"))); // NOI18N
         getContentPane().add(btnKeluar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 983, -1, -1));
 
+        btnTambahKaryawan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btnTambahKaryawan.png"))); // NOI18N
+        btnTambahKaryawan.setBorderPainted(false);
+        btnTambahKaryawan.setContentAreaFilled(false);
+        btnTambahKaryawan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnTambahKaryawan.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btnTambahKaryawan-hover.png"))); // NOI18N
+        getContentPane().add(btnTambahKaryawan, new org.netbeans.lib.awtextra.AbsoluteConstraints(1460, 59, 200, 51));
+
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/bg-mainMenu.png"))); // NOI18N
         jLabel3.setToolTipText("");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -227,9 +227,14 @@ public class karyawan extends javax.swing.JFrame {
     public JTable getTblKaryawan() {
         return tabelDaftarKaryawan;
     }
-
-    public JTextField getTxtSearch() {
-        return kolomPencarian;
+    
+    public String getTxtSearch() {
+        String text = kolomPencarian.getText();
+        
+        if (text.equals(CARI_PLACEHOLDER)) {
+            return "";
+        }
+        return text;
     }
 
     public JButton getBtnSidebarBeranda() {
@@ -255,9 +260,9 @@ public class karyawan extends javax.swing.JFrame {
     public JButton getBtnCari() {
         return btnCari;
     }
-
-    public JButton getBtnTambahMenu() {
-        return btnTambahMenu;
+    
+    public JButton getBtnTambahKaryawan() {
+        return btnTambahKaryawan;
     }
     
     public JButton getBtnKeluar() {
@@ -316,7 +321,7 @@ public class karyawan extends javax.swing.JFrame {
     private javax.swing.JButton btnSideMeja;
     private javax.swing.JButton btnSidePembayaran;
     private javax.swing.JButton btnSidePesanan;
-    private javax.swing.JButton btnTambahMenu;
+    private javax.swing.JButton btnTambahKaryawan;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

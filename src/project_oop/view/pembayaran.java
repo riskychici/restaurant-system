@@ -228,8 +228,13 @@ public class pembayaran extends javax.swing.JFrame {
         return tabelPembayaran;
     }
 
-    public JTextField getTxtSearch() {
-        return kolomPencarian;
+    public String getTxtSearch() {
+        String text = kolomPencarian.getText();
+        
+        if (text.equals(CARI_PLACEHOLDER)) {
+            return "";
+        }
+        return text;
     }
 
     public JButton getBtnSidebarBeranda() {

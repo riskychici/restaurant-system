@@ -382,21 +382,6 @@ public class ModernTable {
             }
         }
 
-        private JLabel createCategoryBadge(String text) {
-            JLabel badge = new JLabel(text);
-            badge.setFont(new Font("Poppins", Font.BOLD, 12));
-            badge.setForeground(new Color(51, 65, 85));
-            badge.setBackground(new Color(225, 225, 225));
-            badge.setOpaque(true);
-            badge.setBorder(BorderFactory.createCompoundBorder(
-                    BorderFactory.createLineBorder(new Color(203, 213, 225), 1),
-                    BorderFactory.createEmptyBorder(6, 12, 6, 12)
-            ));
-            badge.setAlignmentX(Component.LEFT_ALIGNMENT);
-            badge.setAlignmentY(Component.CENTER_ALIGNMENT);
-            return badge;
-        }
-
         private void renderCategory(Object val) {
             String text = val != null ? val.toString() : "";
 
@@ -447,7 +432,7 @@ public class ModernTable {
                     JLabel lblNormal = new JLabel(!hargaAsli.isEmpty() ? hargaAsli : "Rp 0");
                     lblNormal.setFont(new Font("Poppins", Font.BOLD, 15));
                     lblNormal.setForeground(new Color(70, 70, 70));
-                    lblNormal.setAlignmentX(Component.LEFT_ALIGNMENT);
+                    lblNormal.setAlignmentX(Component.CENTER_ALIGNMENT);
                     add(lblNormal);
                 }
             }
@@ -518,13 +503,17 @@ public class ModernTable {
 
         private JButton createButton(String text, Color color) {
             JButton btn = new JButton(text);
-            btn.setFont(new Font("Poppins", Font.BOLD, 10));
+            btn.setFont(new Font("Poppins", Font.BOLD, 11));
             btn.setForeground(Color.WHITE);
             btn.setBackground(color);
             btn.setFocusPainted(false);
             btn.setBorderPainted(false);
-            btn.setPreferredSize(new Dimension(60, 32));
             btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            
+            Dimension prefSize = btn.getPreferredSize();
+            int width = Math.max(50, prefSize.width); 
+            int height = 35; // Tinggi tombol tetap konsisten
+            btn.setPreferredSize(new Dimension(width, height));
 
             btn.addMouseListener(new MouseAdapter() {
                 Color originalColor = color;
@@ -582,13 +571,17 @@ public class ModernTable {
 
         private JButton createButton(String text, Color color) {
             JButton btn = new JButton(text);
-            btn.setFont(new Font("Poppins", Font.BOLD, 10));
+            btn.setFont(new Font("Poppins", Font.BOLD, 11));
             btn.setForeground(Color.WHITE);
             btn.setBackground(color);
             btn.setFocusPainted(false);
             btn.setBorderPainted(false);
-            btn.setPreferredSize(new Dimension(60, 32));
             btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            
+            Dimension prefSize = btn.getPreferredSize();
+            int width = Math.max(50, prefSize.width); 
+            int height = 35; // Tinggi tombol tetap konsisten
+            btn.setPreferredSize(new Dimension(width, height));
 
             btn.addMouseListener(new MouseAdapter() {
                 Color originalColor = color;

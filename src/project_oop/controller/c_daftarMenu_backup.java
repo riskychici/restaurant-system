@@ -101,7 +101,7 @@ public class c_daftarMenu_backup {
 
     public void tampilkanDaftarMenu() {
         try {
-            String search = view3.getTxtSearch().getText().trim();
+            String search = view3.getTxtSearch();
             List<Object[]> dataFromDB = model.getDaftarMenu(search);
 
             // Transform data ke format yang dibutuhkan

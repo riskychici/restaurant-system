@@ -1,3 +1,4 @@
+
 package project_oop.controller;
 
 import com.formdev.flatlaf.FlatLightLaf;
@@ -24,7 +25,7 @@ import style_table.ModernTable;
  */
 public class c_daftarMenu {
 
-    // ==================== ATTRIBUT ====================
+    // ==================== ATRIBUT ====================
     // Model
     private m_daftarMenu model;
 
@@ -73,14 +74,15 @@ public class c_daftarMenu {
         view3.getBtnCari().addActionListener(e -> tampilkanDaftarMenu());
         view3.getBtnSidebarBeranda().addActionListener(new btnSidebarBeranda());
         view3.getBtnSidebarPesanan().addActionListener(new btnSidebarPesanan());
-        view3.getBtnKeluar().addActionListener(new btnKeluar());
         view3.getBtnSidebarKaryawan().addActionListener(new btnSidebarKaryawan());
+        view3.getBtnSidebarMeja().addActionListener(new btnSidebarMeja());
+        view3.getBtnKeluar().addActionListener(new btnKeluar());
     }
 
     // ==================== METHOD TAMPILAN ====================
     public void tampilkanDaftarMenu() {
         try {
-            String search = view3.getTxtSearch().getText().trim();
+            String search = view3.getTxtSearch();
             List<Object[]> dataFromDB = model.getDaftarMenu(search);
             List<Object[]> transformedData = transformDataForTable(dataFromDB);
             renderTable(transformedData);
@@ -225,6 +227,20 @@ public class c_daftarMenu {
         public void actionPerformed(ActionEvent e) {
             try {
                 new c_karyawan();
+                view3.dispose();
+            } catch (SQLException ex) {
+                System.getLogger(c_pesanan.class.getName())
+                        .log(System.Logger.Level.ERROR, "Kesalahan navigasi ke Pesanan", ex);
+            }
+        }
+    }
+    
+    private class btnSidebarMeja implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                new c_meja();
                 view3.dispose();
             } catch (SQLException ex) {
                 System.getLogger(c_pesanan.class.getName())

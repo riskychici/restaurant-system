@@ -75,7 +75,7 @@ public class c_produk {
 
     public void tampilkanProduk() {
         try {
-            String search = view.getTxtSearch().getText().trim();
+            String search = view.getTxtSearch();
             List<Object[]> dataFromDB = model.getDaftarProduk(search);
 
             // Transform data ke format yang dibutuhkan

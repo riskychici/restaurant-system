@@ -6,6 +6,7 @@ import java.awt.Cursor;
 import java.awt.Font;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
@@ -59,8 +60,8 @@ public class daftarMenu extends javax.swing.JFrame {
         btnSideMeja = new javax.swing.JButton();
         btnSidePembayaran = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        username = new javax.swing.JLabel();
+        role = new javax.swing.JLabel();
         btnKeluar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
 
@@ -195,15 +196,15 @@ public class daftarMenu extends javax.swing.JFrame {
         jLabel4.setText("RISKY RESTO");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 33, 159, 38));
 
-        jLabel5.setFont(new java.awt.Font("Poppins SemiBold", 0, 16)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 246, 235));
-        jLabel5.setText("Risky Wahyu");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(76, 978, 105, 24));
+        username.setFont(new java.awt.Font("Poppins SemiBold", 0, 16)); // NOI18N
+        username.setForeground(new java.awt.Color(255, 246, 235));
+        username.setText("Risky Wahyu");
+        getContentPane().add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(76, 978, 105, 24));
 
-        jLabel6.setFont(new java.awt.Font("Poppins", 0, 13)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 246, 235));
-        jLabel6.setText("Owner");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(76, 1000, 43, 20));
+        role.setFont(new java.awt.Font("Poppins", 0, 13)); // NOI18N
+        role.setForeground(new java.awt.Color(255, 246, 235));
+        role.setText("Owner");
+        getContentPane().add(role, new org.netbeans.lib.awtextra.AbsoluteConstraints(76, 1000, 43, 20));
 
         btnKeluar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btnOut.png"))); // NOI18N
         btnKeluar.setBorder(null);
@@ -228,8 +229,13 @@ public class daftarMenu extends javax.swing.JFrame {
         return tabelDaftarMenu;
     }
 
-    public JTextField getTxtSearch() {
-        return kolomPencarian;
+    public String getTxtSearch() {
+        String text = kolomPencarian.getText();
+        
+        if (text.equals(CARI_PLACEHOLDER)) {
+            return "";
+        }
+        return text;
     }
 
     public JButton getBtnSidebarBeranda() {
@@ -266,14 +272,14 @@ public class daftarMenu extends javax.swing.JFrame {
     
     private void kolomPencarianFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_kolomPencarianFocusGained
         if (kolomPencarian.getText().equals(CARI_PLACEHOLDER)) {
-            kolomPencarian.setText(""); // Hapus placeholder
+            kolomPencarian.setText("");
             kolomPencarian.setForeground(java.awt.Color.BLACK);
         }
     }//GEN-LAST:event_kolomPencarianFocusGained
 
     private void kolomPencarianFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_kolomPencarianFocusLost
         if (kolomPencarian.getText().trim().isEmpty()) {
-            kolomPencarian.setText(CARI_PLACEHOLDER); // Tampilkan placeholder
+            kolomPencarian.setText(CARI_PLACEHOLDER);
             kolomPencarian.setForeground(PLACEHOLDER_COLOR);
         }
     }//GEN-LAST:event_kolomPencarianFocusLost
@@ -321,10 +327,10 @@ public class daftarMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField kolomPencarian;
+    private javax.swing.JLabel role;
     private javax.swing.JTable tabelDaftarMenu;
+    private javax.swing.JLabel username;
     // End of variables declaration//GEN-END:variables
 }

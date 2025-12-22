@@ -25,7 +25,7 @@ import style_table.ModernTable;
  */
 public class c_pesanan {
 
-    // ==================== ATTRIBUT ====================
+    // ==================== ATRIBUT ====================
     // Model
     private m_pesanan model;
 
@@ -75,13 +75,14 @@ public class c_pesanan {
         view2.getBtnSidebarBeranda().addActionListener(new btnSidebarBeranda());
         view2.getBtnSidebarDaftarMenu().addActionListener(new btnSidebarDaftarMenu());
         view2.getBtnSidebarKaryawan().addActionListener(new btnSidebarKaryawan());
+        view2.getBtnSidebarMeja().addActionListener(new btnSidebarMeja());
         view2.getBtnKeluar().addActionListener(new btnKeluar());
     }
 
     // ==================== METHOD TAMPILAN ====================
     public void tampilkanPesanan() {
         try {
-            String search = view2.getTxtSearch().getText().trim();
+            String search = view2.getTxtSearch();
             List<Object[]> dataFromDB = model.getPesanan(search);
             List<Object[]> transformedData = transformDataForTable(dataFromDB);
             renderTable(transformedData);
@@ -94,7 +95,7 @@ public class c_pesanan {
         List<Object[]> transformedData = new ArrayList<>();
 
         for (Object[] row : dataFromDB) {
-            Object[] newRow = new Object[6];
+            Object[] newRow = new Object[8];
 
             // Kolom 0: ID
             newRow[0] = row[0];
@@ -110,12 +111,20 @@ public class c_pesanan {
             // Kolom 3: Menu
             String menu = row[3] != null ? row[3].toString() : "";
             newRow[3] = new String[]{menu};
+            
+            // Kolom 4: Qty
+            String qty = row[4] != null ? row[4].toString() : "";
+            newRow[4] = qty;
+
+            // Total Harga
+            String harga = row[6] != null ? row[6].toString() : "";
+            newRow[5] = new String[]{"Rp " + harga};
 
             // Kolom 4: Status Pesanan
-            newRow[4] = row[4] != null ? row[4].toString() : "0";
+            newRow[6] = row[5] != null ? row[5].toString() : "0";
 
             // Kolom 5: Aksi
-            newRow[5] = "";
+            newRow[7] = "";
 
             transformedData.add(newRow);
         }
@@ -125,14 +134,16 @@ public class c_pesanan {
 
     private void renderTable(List<Object[]> data) {
         new ModernTable(view2.getTblPesanan())
-                .setColumns(new String[]{"No", "ID", "Nama", "Meja", "Menu", "Status Pesanan", "Aksi"})
+                .setColumns(new String[]{"No", "ID", "Nama", "Meja", "Menu", "Qty", "Subtotal", "Status Pesanan", "Aksi"})
                 .hideColumn(1)
                 .configureColumn(0, ModernTable.ColumnType.NUMBER, 50)
-                .configureColumn(2, ModernTable.ColumnType.MULTI_LINE, 300)
-                .configureColumn(3, ModernTable.ColumnType.CATEGORY, 120)
+                .configureColumn(2, ModernTable.ColumnType.MULTI_LINE, 200)
+                .configureColumn(3, ModernTable.ColumnType.CATEGORY, 100)
                 .configureColumn(4, ModernTable.ColumnType.PRICE, 180)
-                .configureColumn(5, ModernTable.ColumnType.STOCK, 90)
-                .configureColumn(6, ModernTable.ColumnType.ACTIONS, 230)
+                .configureColumn(5, ModernTable.ColumnType.TEXT, 70)
+                .configureColumn(6, ModernTable.ColumnType.PRICE, 90)
+                .configureColumn(7, ModernTable.ColumnType.STOCK, 120)
+                .configureColumn(8, ModernTable.ColumnType.ACTIONS, 230)
                 .setRowHeight(70)
                 .addActionButton("Detail", new Color(59, 130, 246), this::handleDetailAction)
                 .addActionButton("Edit", new Color(251, 146, 60), this::handleEditAction)
@@ -219,13 +230,27 @@ public class c_pesanan {
             }
         }
     }
-    
+
     private class btnSidebarKaryawan implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
                 new c_karyawan();
+                view2.dispose();
+            } catch (SQLException ex) {
+                System.getLogger(c_pesanan.class.getName())
+                        .log(System.Logger.Level.ERROR, "Kesalahan navigasi ke Pesanan", ex);
+            }
+        }
+    }
+
+    private class btnSidebarMeja implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                new c_meja();
                 view2.dispose();
             } catch (SQLException ex) {
                 System.getLogger(c_pesanan.class.getName())

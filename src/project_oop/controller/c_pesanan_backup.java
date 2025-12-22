@@ -20,8 +20,8 @@ public class c_pesanan_backup {
     private m_pesanan model;
     private pesanan view;
     private daftarMenu view2;
-    
-        // Sidebar Daftar Menu
+
+    // Sidebar Daftar Menu
     private class btnSidebarDaftarMenu implements ActionListener {
 
         @Override
@@ -52,16 +52,14 @@ public class c_pesanan_backup {
         this.view = new pesanan();
         this.view2 = new daftarMenu();
         this.view.setVisible(true);
-            view.getBtnSidebarDaftarMenu().addActionListener(new btnSidebarDaftarMenu());
-            
-            tampilkanDaftarPesanan();
+        view.getBtnSidebarDaftarMenu().addActionListener(new btnSidebarDaftarMenu());
+
+        tampilkanDaftarPesanan();
     }
 
-    
-    
     public void tampilkanDaftarPesanan() {
         try {
-            String search = view.getTxtSearch().getText().trim();
+            String search = view.getTxtSearch();
             List<Object[]> dataFromDB = model.getPesanan(search);
 
             // Transform data ke format yang dibutuhkan
@@ -76,11 +74,11 @@ public class c_pesanan_backup {
                 // Sekarang di ubah hanya menampilkan nama menu saja
                 String nama = row[1] != null ? row[1].toString() : "";
                 newRow[1] = new Object[]{"", nama};
-                
+
                 // Kolom 2: Kategori
                 String kategori = row[2] != null ? row[2].toString() : "";
                 newRow[2] = kategori;
-                
+
                 // Kolom 3: Harga (pakai satu harga saja)
                 String harga = row[3] != null ? row[3].toString() : "";
                 newRow[3] = new String[]{harga};
@@ -132,8 +130,8 @@ public class c_pesanan_backup {
             JOptionPane.showMessageDialog(view, "Error: " + ex.getMessage());
         }
     }
-    
-        private void tampilDetail(String id) {
+
+    private void tampilDetail(String id) {
         // Logic detail produk
         JOptionPane.showMessageDialog(view, "Detail Produk ID: " + id);
         System.out.println("Detail produk: " + id);
@@ -144,5 +142,5 @@ public class c_pesanan_backup {
         JOptionPane.showMessageDialog(view, "Edit Produk ID: " + id);
         System.out.println("Edit produk: " + id);
     }
-    
+
 }

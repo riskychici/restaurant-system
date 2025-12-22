@@ -49,7 +49,7 @@ public class meja extends javax.swing.JFrame {
         tabelDaftarMeja = new javax.swing.JTable();
         btnCari = new javax.swing.JButton();
         kolomPencarian = new javax.swing.JTextField();
-        btnTambahMenu = new javax.swing.JButton();
+        btnTambahMeja = new javax.swing.JButton();
         btnSideBeranda = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -131,12 +131,12 @@ public class meja extends javax.swing.JFrame {
         });
         getContentPane().add(kolomPencarian, new org.netbeans.lib.awtextra.AbsoluteConstraints(335, 161, 265, 35));
 
-        btnTambahMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-tambahMenu.png"))); // NOI18N
-        btnTambahMenu.setBorderPainted(false);
-        btnTambahMenu.setContentAreaFilled(false);
-        btnTambahMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnTambahMenu.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-tambahMenu-hover.png"))); // NOI18N
-        getContentPane().add(btnTambahMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(1500, 59, 160, 51));
+        btnTambahMeja.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btnTambahMeja.png"))); // NOI18N
+        btnTambahMeja.setBorderPainted(false);
+        btnTambahMeja.setContentAreaFilled(false);
+        btnTambahMeja.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnTambahMeja.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btnTambahMeja-hover.png"))); // NOI18N
+        getContentPane().add(btnTambahMeja, new org.netbeans.lib.awtextra.AbsoluteConstraints(1500, 59, 160, 51));
 
         btnSideBeranda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-beranda-nonAktif.png"))); // NOI18N
         btnSideBeranda.setBorderPainted(false);
@@ -228,8 +228,13 @@ public class meja extends javax.swing.JFrame {
         return tabelDaftarMeja;
     }
 
-    public JTextField getTxtSearch() {
-        return kolomPencarian;
+    public String getTxtSearch() {
+        String text = kolomPencarian.getText();
+        
+        if (text.equals(CARI_PLACEHOLDER)) {
+            return "";
+        }
+        return text;
     }
 
     public JButton getBtnSidebarBeranda() {
@@ -256,8 +261,12 @@ public class meja extends javax.swing.JFrame {
         return btnCari;
     }
 
-    public JButton getBtnTambahMenu() {
-        return btnTambahMenu;
+    public JButton getBtnTambahMeja() {
+        return btnTambahMeja;
+    }
+    
+    public JButton getBtnKeluar() {
+        return btnKeluar;
     }
     
     private void kolomPencarianFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_kolomPencarianFocusGained
@@ -312,7 +321,7 @@ public class meja extends javax.swing.JFrame {
     private javax.swing.JButton btnSideMeja;
     private javax.swing.JButton btnSidePembayaran;
     private javax.swing.JButton btnSidePesanan;
-    private javax.swing.JButton btnTambahMenu;
+    private javax.swing.JButton btnTambahMeja;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

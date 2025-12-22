@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package project_oop.controller;
 
 import java.awt.event.ActionEvent;
@@ -10,43 +5,95 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import project_oop.model.m_login;
 import project_oop.view.login;
-//import sun.security.util.Password;
 
 /**
- *
- * @author Lorem Ipsum25
+ * Controller untuk menangani autentikasi user
  */
 public class c_user {
 
-    private login v_lg_objct;
-    private String username;
-    private String password;
+    // ========== ATRIBUT ==========
+    private static final Logger LOGGER = Logger.getLogger(c_user.class.getName());
 
-    public c_user() {
-        v_lg_objct = new login();
-        v_lg_objct.setVisible(true);
-        v_lg_objct.login_btn().addActionListener(new btn_login_listener());
+    private final m_login model;
+    private final login view;
+
+    // ========== CONSTRUCTOR ==========
+    public c_user() throws SQLException {
+        this.model = new m_login();
+        this.view = new login();
+
+        tampilkanView();
+        pasangEventListeners();
     }
 
-    private class btn_login_listener implements ActionListener {
+    // ========== METHOD INISIALISASI ==========
+    private void tampilkanView() {
+        view.setVisible(true);
+    }
+
+    private void pasangEventListeners() {
+        view.login_btn().addActionListener(new LoginButtonListener());
+    }
+
+    // ========== METHOD PROSES LOGIN ==========
+    private void prosesLogin() {
+        String username = view.get_username().getText();
+        String password = view.get_password().getText();
+
+        try {
+            model.get_login_personal(username, password);
+
+            if (cekLoginBerhasil()) {
+                bukaMenuUtama();
+            } else {
+                showLoginError();
+            }
+
+        } catch (SQLException ex) {
+            handleErrorLogin(ex);
+        }
+    }
+
+    private boolean cekLoginBerhasil() {
+        if (model.rows.isEmpty()) {
+            return false;
+        }
+
+        Object[] userData = model.rows.get(0);
+        String message = (String) userData[0];
+        int idPersonal = (int) userData[1];
+
+        return !message.equals("Login Gagal") && idPersonal != 0;
+    }
+
+    private void bukaMenuUtama() {
+        try {
+            new c_daftarMenu();
+            view.setVisible(false);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "Error navigating to main menu", ex);
+            view.label_info().setText("Terjadi kesalahan saat membuka menu.");
+        }
+    }
+
+    private void showLoginError() {
+        view.label_info().setText("Email atau Password kamu salah!");
+    }
+
+    private void handleErrorLogin(SQLException ex) {
+        LOGGER.log(Level.SEVERE, "Database connection error during login", ex);
+        view.label_info().setText("Terjadi kesalahan saat koneksi ke database.");
+    }
+
+    // ========== INNER CLASS (EVENT LISTENERS) ==========
+    private class LoginButtonListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            username = v_lg_objct.get_username().getText();
-            password = v_lg_objct.get_password().getText();
-            if (username.equalsIgnoreCase("riskychici") && password.equalsIgnoreCase("admin")) {
-                try {
-                    new c_daftarMenu();
-                    v_lg_objct.setVisible(false);
-                } catch (SQLException ex) {
-                    Logger.getLogger(c_user.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            } else {
-                v_lg_objct.label_info().setText("Email atau Password kamu salah!");
-            }
+            prosesLogin();
         }
-
     }
-
 }
