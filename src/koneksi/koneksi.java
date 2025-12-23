@@ -5,8 +5,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class koneksi implements AutoCloseable {
+
     private Connection con;
 
     public koneksi() throws SQLException {
@@ -57,8 +59,8 @@ public class koneksi implements AutoCloseable {
     }
 
     /**
-     * Tambahan baru: mengembalikan PreparedStatement siap pakai.
-     * Ini digunakan jika ingin mengontrol eksekusi atau ambil metadata.
+     * Tambahan baru: mengembalikan PreparedStatement siap pakai. Ini digunakan
+     * jika ingin mengontrol eksekusi atau ambil metadata.
      */
     public PreparedStatement prepareStatement(String sql) throws SQLException {
         if (con == null || con.isClosed()) {

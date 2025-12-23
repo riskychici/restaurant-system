@@ -160,7 +160,7 @@ public class c_daftarMenu_backup {
                                 "Konfirmasi",
                                 JOptionPane.YES_NO_OPTION);
                         if (confirm == JOptionPane.YES_OPTION) {
-                            model.hapusMenu(id);
+//                            model.hapusMenu(id);
                             JOptionPane.showMessageDialog(view, "Produk berhasil dihapus!");
                             tampilkanDaftarMenu(); // Refresh
                         }

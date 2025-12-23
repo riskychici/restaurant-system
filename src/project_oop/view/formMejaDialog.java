@@ -37,7 +37,7 @@ public class formMejaDialog extends JDialog {
     private JTextField txtStatus;
     private JTextField txtNamaPelanggan;
     private JTextField txtJamMasuk;
-    private JSpinner spnKapasitas;
+    private JTextField txtKapasitas; // SEBELUMNYA JSpinner, SEKARANG JTextField
 
     private JButton btnSimpan;
     private JButton btnBatal;
@@ -46,18 +46,12 @@ public class formMejaDialog extends JDialog {
     private int idMeja = -1;
 
     // ==================== CONSTRUCTORS ====================
-    /**
-     * Constructor untuk mode Tambah Meja
-     */
     public formMejaDialog(JFrame parent) {
         super(parent, "Tambah Meja Baru", true);
         initComponents();
         setLocationRelativeTo(parent);
     }
 
-    /**
-     * Constructor untuk mode Edit Meja
-     */
     public formMejaDialog(JFrame parent, int id, String nomor, int kapasitas) {
         super(parent, "Edit Meja", true);
         this.idMeja = id;
@@ -110,39 +104,39 @@ public class formMejaDialog extends JDialog {
     }
 
     private void addInputNomorMeja(JPanel panel, GridBagConstraints gbc) {
-        txtNomorMeja = new JTextField();
+        txtNomorMeja = createTextField("Masukkan nomor meja...");
         addInputField(panel, "Nomor Meja:", txtNomorMeja, gbc, 1);
     }
 
     private void addInputKapasitas(JPanel panel, GridBagConstraints gbc) {
-        spnKapasitas = new JSpinner(new SpinnerNumberModel(2, 1, 50, 1));
-
         gbc.gridy = 3;
         gbc.insets = new Insets(0, 0, 5, 0);
         panel.add(new JLabel("Kapasitas (Orang):"), gbc);
 
+        // Menggunakan JTextField seperti pada formMenuDialog
+        txtKapasitas = createTextField("Masukkan jumlah kapasitas...");
         gbc.gridy = 4;
         gbc.insets = new Insets(0, 0, 15, 0);
-        panel.add(spnKapasitas, gbc);
+        panel.add(txtKapasitas, gbc);
     }
 
     private void addInputStatus(JPanel panel, GridBagConstraints gbc) {
         lblStatus = new JLabel("Status Meja:");
-        txtStatus = new JTextField();
+        txtStatus = createTextField("");
         txtStatus.setEditable(false);
         addDetailField(panel, lblStatus, txtStatus, gbc, 5);
     }
 
     private void addInputPelanggan(JPanel panel, GridBagConstraints gbc) {
         lblPelanggan = new JLabel("Nama Pelanggan:");
-        txtNamaPelanggan = new JTextField();
+        txtNamaPelanggan = createTextField("");
         txtNamaPelanggan.setEditable(false);
         addDetailField(panel, lblPelanggan, txtNamaPelanggan, gbc, 7);
     }
 
     private void addInputJamMasuk(JPanel panel, GridBagConstraints gbc) {
         lblJam = new JLabel("Jam Masuk:");
-        txtJamMasuk = new JTextField();
+        txtJamMasuk = createTextField("");
         txtJamMasuk.setEditable(false);
         addDetailField(panel, lblJam, txtJamMasuk, gbc, 9);
     }
@@ -188,18 +182,21 @@ public class formMejaDialog extends JDialog {
 
     private JButton createButton(String text, Color bgColor) {
         JButton button = new JButton(text);
-
-        String style = String.format(
-                "minimumWidth: %d; minimumHeight: %d; arc: %d;",
-                BUTTON_MIN_WIDTH, BUTTON_MIN_HEIGHT, BUTTON_ARC
-        );
+        String style = String.format("minimumWidth: %d; minimumHeight: %d; arc: %d;",
+                BUTTON_MIN_WIDTH, BUTTON_MIN_HEIGHT, BUTTON_ARC);
         button.putClientProperty(FlatClientProperties.STYLE, style);
         button.setBackground(bgColor);
         button.setForeground(Color.WHITE);
-        
         button.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
         return button;
+    }
+
+    // Helper untuk membuat textfield konsisten
+    private JTextField createTextField(String placeholder) {
+        JTextField field = new JTextField();
+        field.setFont(FONT_LABEL);
+        field.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, placeholder);
+        return field;
     }
 
     private void setupEventListeners() {
@@ -207,34 +204,33 @@ public class formMejaDialog extends JDialog {
     }
 
     // ==================== PUBLIC SETTERS ====================
-    /**
-     * Set data untuk mode Edit
-     */
     public void setData(String nomor, int kapasitas) {
         txtNomorMeja.setText(nomor);
-        spnKapasitas.setValue(kapasitas);
+        txtKapasitas.setText(String.valueOf(kapasitas));
     }
 
-    /**
-     * Set data detail aktivitas pelanggan
-     */
     public void setDataDetail(String status, String pelanggan, String jam) {
         txtStatus.setText(status);
+        if (lblJudul != null) {
+            lblJudul.setText("Detail Meja");
+        }
+        setTitle("Detail Meja");
 
         if (pelanggan != null && !pelanggan.isEmpty()) {
             txtNamaPelanggan.setText(pelanggan);
             txtJamMasuk.setText(jam);
-
             showDetailComponents();
             expandDialogSize();
+            setFieldsReadOnly();
+            showStatusField();
+            hideActionButtons();
+            applyReadOnlyStyles();
         }
     }
 
-    /**
-     * Aktifkan mode Detail (read-only)
-     */
     public void setDetailMode() {
         updateTitle("Detail Meja");
+        setTitle("Detail Meja");
         setFieldsReadOnly();
         showStatusField();
         hideActionButtons();
@@ -261,7 +257,7 @@ public class formMejaDialog extends JDialog {
 
     private void setFieldsReadOnly() {
         txtNomorMeja.setEditable(false);
-        spnKapasitas.setEnabled(false);
+        txtKapasitas.setEditable(false); // Menggunakan setEditable untuk JTextField
     }
 
     private void showStatusField() {
@@ -279,6 +275,7 @@ public class formMejaDialog extends JDialog {
         txtStatus.setBackground(COLOR_BG_READONLY);
         txtNamaPelanggan.setBackground(COLOR_BG_READONLY);
         txtJamMasuk.setBackground(COLOR_BG_READONLY);
+        txtKapasitas.setBackground(COLOR_BG_READONLY);
     }
 
     // ==================== PUBLIC GETTERS ====================
@@ -291,6 +288,12 @@ public class formMejaDialog extends JDialog {
     }
 
     public int getKapasitas() {
-        return (int) spnKapasitas.getValue();
+        try {
+            // Menghapus karakter non-digit jika ada, lalu parse
+            String value = txtKapasitas.getText().replaceAll("[^0-9]", "");
+            return value.isEmpty() ? 0 : Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+            return 0;
+        }
     }
 }

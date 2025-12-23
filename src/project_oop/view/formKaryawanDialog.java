@@ -202,6 +202,7 @@ public class formKaryawanDialog extends JDialog {
         if (lblJudul != null) {
             lblJudul.setText("Edit Karyawan");
         }
+        setTitle("Edit Karyawan");
     }
 
     private void selectRoleById(int idRole) {
@@ -216,6 +217,7 @@ public class formKaryawanDialog extends JDialog {
 
     public void setDetailMode() {
         lblJudul.setText("Detail Karyawan");
+        setTitle("Detail Karyawan");
 
         txtNama.setEditable(false);
         txtNoTelp.setEditable(false);

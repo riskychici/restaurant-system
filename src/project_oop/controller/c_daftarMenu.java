@@ -1,4 +1,3 @@
-
 package project_oop.controller;
 
 import com.formdev.flatlaf.FlatLightLaf;
@@ -19,6 +18,7 @@ import project_oop.view.pembayaran;
 import project_oop.view.pesanan;
 import project_oop.view.login;
 import style_table.ModernTable;
+import project_oop.view.formMenuDialog;
 
 /**
  * Controller untuk mengelola Daftar Menu
@@ -26,10 +26,7 @@ import style_table.ModernTable;
 public class c_daftarMenu {
 
     // ==================== ATRIBUT ====================
-    // Model
     private m_daftarMenu model;
-
-    // View
     private beranda view;
     private pesanan view2;
     private daftarMenu view3;
@@ -72,6 +69,7 @@ public class c_daftarMenu {
 
     private void aturEventListeners() {
         view3.getBtnCari().addActionListener(e -> tampilkanDaftarMenu());
+        view3.getBtnTambahMenu().addActionListener(e -> handleTambahMenu());
         view3.getBtnSidebarBeranda().addActionListener(new btnSidebarBeranda());
         view3.getBtnSidebarPesanan().addActionListener(new btnSidebarPesanan());
         view3.getBtnSidebarKaryawan().addActionListener(new btnSidebarKaryawan());
@@ -93,34 +91,18 @@ public class c_daftarMenu {
 
     private List<Object[]> transformDataForTable(List<Object[]> dataFromDB) {
         List<Object[]> transformedData = new ArrayList<>();
-
         for (Object[] row : dataFromDB) {
             Object[] newRow = new Object[6];
-
-            // Kolom 0: ID
-            newRow[0] = row[0];
-
-            // Kolom 1: Nama Menu
+            newRow[0] = row[0]; // ID ASLI
             String nama = row[1] != null ? row[1].toString() : "";
-            newRow[1] = new Object[]{"", nama};
-
-            // Kolom 2: Kategori
-            String kategori = row[2] != null ? row[2].toString() : "";
-            newRow[2] = kategori;
-
-            // Kolom 3: Harga
+            newRow[1] = new Object[]{"", nama}; // Format MULTI_LINE
+            newRow[2] = row[2] != null ? row[2].toString() : "";
             String harga = row[3] != null ? row[3].toString() : "";
-            newRow[3] = new String[]{"Rp " + harga};
-
-            // Kolom 4: Stok
-            newRow[4] = row[4] != null ? row[4].toString() : "0";
-
-            // Kolom 5: Aksi
-            newRow[5] = "";
-
+            newRow[3] = new String[]{"Rp " + harga}; // Format PRICE
+            newRow[4] = row[4] != null ? row[4].toString() : "0"; // Stok
+            newRow[5] = ""; // Aksi
             transformedData.add(newRow);
         }
-
         return transformedData;
     }
 
@@ -142,48 +124,150 @@ public class c_daftarMenu {
                 .render();
     }
 
-    // ==================== HANDLER TOMBOL AKSI (Detail, Edit, Hapus) ====================
-    private void handleDetailAction(int row, Object[] rowData) {
-        String id = rowData[1].toString();
-        tampilDetail(id);
-    }
+    // ==================== HANDLER TOMBOL AKSI ====================
+    private void handleTambahMenu() {
+        try {
+            List<String> kategori = model.ambilKategori();
+            formMenuDialog dialog = new formMenuDialog(view3, kategori);
+            // Judul otomatis "Tambah Menu" (default dialog)
 
-    private void handleEditAction(int row, Object[] rowData) {
-        String id = rowData[1].toString();
-        editMenu(id);
-    }
+            dialog.getBtnSimpan().addActionListener(e -> {
+                try {
+                    String nama = dialog.getNama();
+                    int idKat = dialog.getIdKategori();
+                    double harga = dialog.getHarga();
+                    int stok = dialog.getStok();
 
-    private void handleDeleteAction(int row, Object[] rowData) {
-        String id = rowData[1].toString();
-        int confirm = JOptionPane.showConfirmDialog(
-                view3,
-                "Yakin ingin menghapus produk?",
-                "Konfirmasi",
-                JOptionPane.YES_NO_OPTION
-        );
+                    if (nama.isEmpty()) {
+                        showError("Nama menu harus diisi!");
+                        return;
+                    }
 
-        if (confirm == JOptionPane.YES_OPTION) {
-            try {
-                model.hapusMenu(id);
-                showSuccess("Produk berhasil dihapus!");
-                tampilkanDaftarMenu();
-            } catch (Exception e) {
-                showError("Gagal menghapus produk: " + e.getMessage());
-            }
+                    String hasil = model.tambahMenu(nama, idKat, harga, stok);
+                    prosesHasil(hasil, dialog);
+                } catch (SQLException ex) {
+                    showError("Database Error: " + ex.getMessage());
+                }
+            });
+            dialog.setVisible(true);
+        } catch (SQLException ex) {
+            showError("Gagal mengambil data kategori: " + ex.getMessage());
         }
     }
 
-    private void tampilDetail(String id) {
-        JOptionPane.showMessageDialog(view3, "Detail Produk ID: " + id);
-        System.out.println("Detail produk: " + id);
+    private void handleEditAction(int row, Object[] rowData) {
+        try {
+            int idMenu = Integer.parseInt(rowData[1].toString());
+
+            // Ambil Nama (Format MULTI_LINE)
+            String namaLama = (rowData[2] instanceof Object[])
+                    ? ((Object[]) rowData[2])[1].toString() : rowData[2].toString();
+
+            String kategoriLama = rowData[3].toString();
+
+            // Ambil Harga (Format PRICE)
+            double hargaLama = 0;
+            if (rowData[4] instanceof String[]) {
+                hargaLama = Double.parseDouble(((String[]) rowData[4])[0].replaceAll("[^0-9]", ""));
+            } else {
+                hargaLama = Double.parseDouble(rowData[4].toString().replaceAll("[^0-9]", ""));
+            }
+
+            int stokLama = Integer.parseInt(rowData[5].toString().trim());
+
+            List<String> listKategori = model.ambilKategori();
+            formMenuDialog dialog = new formMenuDialog(view3, listKategori);
+
+            // Method ini sekarang merubah judul menjadi "Edit Menu"
+            dialog.setData(String.valueOf(idMenu), namaLama, hargaLama, stokLama, kategoriLama);
+
+            dialog.getBtnSimpan().addActionListener(e -> {
+                try {
+                    String hasil = model.updateMenu(idMenu, dialog.getNama(),
+                            dialog.getIdKategori(), dialog.getHarga(), dialog.getStok());
+                    prosesHasil(hasil, dialog);
+                } catch (SQLException ex) {
+                    showError("Gagal Update: " + ex.getMessage());
+                }
+            });
+            dialog.setVisible(true);
+        } catch (Exception ex) {
+            showError("Gagal memproses data edit: " + ex.getMessage());
+        }
     }
 
-    private void editMenu(String id) {
-        JOptionPane.showMessageDialog(view3, "Edit Produk ID: " + id);
-        System.out.println("Edit produk: " + id);
+    private void handleDeleteAction(int row, Object[] rowData) {
+        try {
+            // Ambil ID dari kolom yang disembunyikan (Index 1)
+            int idMenu = Integer.parseInt(rowData[1].toString());
+
+            // Ambil Nama Menu untuk pesan konfirmasi yang lebih jelas
+            String namaMenu = (rowData[2] instanceof Object[])
+                    ? ((Object[]) rowData[2])[1].toString() : rowData[2].toString();
+
+            int confirm = JOptionPane.showConfirmDialog(
+                    view3,
+                    "Apakah Anda yakin ingin menghapus menu '" + namaMenu + "'?",
+                    "Konfirmasi Hapus",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE
+            );
+
+            if (confirm == JOptionPane.YES_OPTION) {
+                String hasil = model.hapusMenu(idMenu); // Pastikan Model menerima Integer
+                if (hasil.toLowerCase().contains("berhasil")) {
+                    showSuccess(hasil);
+                    tampilkanDaftarMenu(); // Refresh tabel
+                } else {
+                    showError(hasil);
+                }
+            }
+        } catch (Exception e) {
+            showError("Gagal menghapus produk: " + e.getMessage());
+        }
     }
 
-    // ==================== METHOD DIALOG PESAN ====================
+    private void handleDetailAction(int row, Object[] rowData) {
+        try {
+            // 1. Ambil data dari tabel (sama seperti edit)
+            int idMenu = Integer.parseInt(rowData[1].toString());
+            String nama = (rowData[2] instanceof Object[]) ? ((Object[]) rowData[2])[1].toString() : rowData[2].toString();
+            String kategori = rowData[3].toString();
+
+            double harga = 0;
+            if (rowData[4] instanceof String[]) {
+                harga = Double.parseDouble(((String[]) rowData[4])[0].replaceAll("[^0-9]", ""));
+            } else {
+                harga = Double.parseDouble(rowData[4].toString().replaceAll("[^0-9]", ""));
+            }
+
+            int stok = Integer.parseInt(rowData[5].toString().trim());
+
+            // 2. Siapkan Dialog
+            List<String> listKategori = model.ambilKategori();
+            formMenuDialog dialog = new formMenuDialog(view3, listKategori);
+
+            // 3. Set Data dan AKTIFKAN MODE DETAIL
+            dialog.setData(String.valueOf(idMenu), nama, harga, stok, kategori);
+            dialog.setDetailMode(); // <--- Inilah kuncinya
+
+            dialog.setVisible(true);
+        } catch (Exception ex) {
+            showError("Gagal menampilkan detail: " + ex.getMessage());
+        }
+    }
+
+    private void prosesHasil(String hasil, formMenuDialog dialog) {
+        if (hasil.toUpperCase().startsWith("GAGAL")) {
+            showError(hasil);
+        } else {
+            showSuccess(hasil);
+            dialog.dispose();
+            tampilkanDaftarMenu();
+        }
+    }
+
+    // ==================== DIALOG PESAN ====================
     private void showError(String message) {
         JOptionPane.showMessageDialog(view3, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
@@ -192,7 +276,7 @@ public class c_daftarMenu {
         JOptionPane.showMessageDialog(view3, message, "Sukses", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    // ==================== BAGIAN UNTUK MENGATUR AKSI TOMBOL ====================
+    // ==================== NAVIGASI SIDEBAR ====================
     private class btnSidebarBeranda implements ActionListener {
 
         @Override
@@ -201,8 +285,6 @@ public class c_daftarMenu {
                 new c_pesanan();
                 view3.dispose();
             } catch (SQLException ex) {
-                System.getLogger(c_pesanan.class.getName())
-                        .log(System.Logger.Level.ERROR, "Kesalahan navigasi ke Beranda", ex);
             }
         }
     }
@@ -215,12 +297,10 @@ public class c_daftarMenu {
                 new c_pesanan();
                 view3.dispose();
             } catch (SQLException ex) {
-                System.getLogger(c_pesanan.class.getName())
-                        .log(System.Logger.Level.ERROR, "Kesalahan navigasi ke Pesanan", ex);
             }
         }
     }
-    
+
     private class btnSidebarKaryawan implements ActionListener {
 
         @Override
@@ -229,12 +309,10 @@ public class c_daftarMenu {
                 new c_karyawan();
                 view3.dispose();
             } catch (SQLException ex) {
-                System.getLogger(c_pesanan.class.getName())
-                        .log(System.Logger.Level.ERROR, "Kesalahan navigasi ke Pesanan", ex);
             }
         }
     }
-    
+
     private class btnSidebarMeja implements ActionListener {
 
         @Override
@@ -243,8 +321,6 @@ public class c_daftarMenu {
                 new c_meja();
                 view3.dispose();
             } catch (SQLException ex) {
-                System.getLogger(c_pesanan.class.getName())
-                        .log(System.Logger.Level.ERROR, "Kesalahan navigasi ke Pesanan", ex);
             }
         }
     }
@@ -253,23 +329,14 @@ public class c_daftarMenu {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            int konfirmasi = JOptionPane.showConfirmDialog(
-                    view3,
-                    "Apakah kamu yakin ingin keluar dari akun ini?",
-                    "Konfirmasi Keluar",
-                    JOptionPane.YES_NO_OPTION
-            );
-
+            int konfirmasi = JOptionPane.showConfirmDialog(view3, "Keluar dari akun?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
             if (konfirmasi == JOptionPane.YES_OPTION) {
                 try {
                     new c_user();
                     view3.dispose();
                 } catch (Exception ex) {
-                    System.err.println("Gagal navigasi ke Login: " + ex.getMessage());
                 }
             }
-
         }
-
     }
 }

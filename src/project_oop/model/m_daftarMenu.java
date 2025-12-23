@@ -1,5 +1,5 @@
-
 package project_oop.model;
+
 import koneksi.koneksi;
 import java.sql.*;
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import java.util.List;
 public class m_daftarMenu {
 
     private final koneksi koneksi;
-    
+
     public m_daftarMenu() throws SQLException {
         this.koneksi = new koneksi();
     }
@@ -37,7 +37,77 @@ public class m_daftarMenu {
         return data;
     }
 
-    public void hapusMenu(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    // Pilih kategori menu
+    public List<String> ambilKategori() throws SQLException {
+        List<String> data = new ArrayList<>();
+        String sql = "SELECT * FROM public.pilih_kategori()";
+
+        // Gunakan prepareStatement dari kelas koneksi kamu
+        try (PreparedStatement ps = koneksi.prepareStatement(sql); ResultSet rs = ps.executeQuery()) { // JANGAN masukkan 'sql' lagi di sini
+
+            while (rs.next()) {
+                // Sesuai dengan nama kolom di fungsi SQL kamu
+                data.add(rs.getString("kategori_info"));
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Gagal mengambil data kategori: " + e.getMessage());
+        }
+        return data;
+    }
+
+    // Tambah Menu
+    public String tambahMenu(String nama, int idKategori, double harga, int stok) throws SQLException {
+        // Sesuaikan jumlah parameter (?) menjadi 4 saja
+        String sql = "SELECT public.tambah_menu(?::character varying, ?::integer, ?::numeric, ?::integer)";
+
+        try (PreparedStatement ps = koneksi.prepareStatement(sql)) {
+            ps.setString(1, nama);
+            ps.setInt(2, idKategori);
+            ps.setDouble(3, harga);
+            ps.setInt(4, stok);
+            // Hapus parameter ke-5 jika sebelumnya ada
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString(1);
+                }
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Gagal mengeksekusi fungsi tambah_menu: " + e.getMessage());
+        }
+        return "GAGAL: Database tidak memberikan respon.";
+    }
+
+    //Edit Menu
+    public String updateMenu(int id, String nama, int idKategori, double harga, int stok) throws SQLException {
+        String sql = "SELECT public.update_menu(?::integer, ?::character varying, ?::integer, ?::numeric, ?::integer)";
+
+        try (PreparedStatement ps = koneksi.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ps.setString(2, nama);
+            ps.setInt(3, idKategori);
+            ps.setDouble(4, harga);
+            ps.setInt(5, stok);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString(1);
+                }
+            }
+        }
+        return "GAGAL: Tidak ada respon dari database.";
+    }
+
+    public String hapusMenu(int idMenu) throws SQLException {
+        String sql = "SELECT public.hapus_menu(?)";
+        try (PreparedStatement ps = koneksi.getConnection().prepareStatement(sql)) {
+            ps.setInt(1, idMenu);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString(1);
+                }
+            }
+        }
+        return "Gagal menghapus data";
     }
 }

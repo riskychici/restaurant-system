@@ -51,7 +51,7 @@ public class pesanan extends javax.swing.JFrame {
         tabelPesanan = new javax.swing.JTable();
         btnCari = new javax.swing.JButton();
         kolomPencarian = new javax.swing.JTextField();
-        btnTambahMenu = new javax.swing.JButton();
+        btnBuatPesanan = new javax.swing.JButton();
         btnSideBeranda = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -132,12 +132,12 @@ public class pesanan extends javax.swing.JFrame {
         });
         getContentPane().add(kolomPencarian, new org.netbeans.lib.awtextra.AbsoluteConstraints(335, 161, 265, 35));
 
-        btnTambahMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-tambahMenu.png"))); // NOI18N
-        btnTambahMenu.setBorderPainted(false);
-        btnTambahMenu.setContentAreaFilled(false);
-        btnTambahMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnTambahMenu.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-tambahMenu-hover.png"))); // NOI18N
-        getContentPane().add(btnTambahMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(1500, 59, 160, 51));
+        btnBuatPesanan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-tambahMenu.png"))); // NOI18N
+        btnBuatPesanan.setBorderPainted(false);
+        btnBuatPesanan.setContentAreaFilled(false);
+        btnBuatPesanan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnBuatPesanan.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-tambahMenu-hover.png"))); // NOI18N
+        getContentPane().add(btnBuatPesanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(1500, 59, 160, 51));
 
         btnSideBeranda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-beranda-nonAktif.png"))); // NOI18N
         btnSideBeranda.setBorderPainted(false);
@@ -231,13 +231,13 @@ public class pesanan extends javax.swing.JFrame {
 
     public String getTxtSearch() {
         String text = kolomPencarian.getText();
-        
+
         if (text.equals(CARI_PLACEHOLDER)) {
             return "";
         }
         return text;
     }
-    
+
     public JButton getBtnSidebarBeranda() {
         return btnSideBeranda;
     }
@@ -245,11 +245,11 @@ public class pesanan extends javax.swing.JFrame {
     public JButton getBtnSidebarDaftarMenu() {
         return btnSideDaftarMenu;
     }
-    
+
     public JButton getBtnSidebarKaryawan() {
         return btnSideKaryawan;
     }
-    
+
     public JButton getBtnSidebarMeja() {
         return btnSideMeja;
     }
@@ -257,15 +257,19 @@ public class pesanan extends javax.swing.JFrame {
     public JButton getBtnSidebarPembayaran() {
         return btnSidePembayaran;
     }
-    
+
     public JButton getBtnCari() {
         return btnCari;
     }
-    
+
+    public JButton getBtnBuatPesanan() {
+        return btnBuatPesanan;
+    }
+
     public JButton getBtnKeluar() {
         return btnKeluar;
     }
-    
+
     private void kolomPencarianFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_kolomPencarianFocusGained
         if (kolomPencarian.getText().equals(CARI_PLACEHOLDER)) {
             kolomPencarian.setText(""); // Hapus placeholder
@@ -310,6 +314,7 @@ public class pesanan extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuatPesanan;
     private javax.swing.JButton btnCari;
     private javax.swing.JButton btnKeluar;
     private javax.swing.JButton btnSideBeranda;
@@ -318,7 +323,6 @@ public class pesanan extends javax.swing.JFrame {
     private javax.swing.JButton btnSideMeja;
     private javax.swing.JButton btnSidePembayaran;
     private javax.swing.JButton btnSidePesanan;
-    private javax.swing.JButton btnTambahMenu;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
