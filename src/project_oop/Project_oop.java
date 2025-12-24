@@ -32,7 +32,7 @@ public class Project_oop {
         java.awt.EventQueue.invokeLater(() -> {
             try {
 //                new c_kategori_produk(); // panggil controller utama kamu
-                new c_daftarMenu();
+                new c_user();
             } catch (Exception e) {
                 e.printStackTrace();
             }

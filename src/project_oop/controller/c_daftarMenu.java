@@ -90,17 +90,25 @@ public class c_daftarMenu {
     }
 
     private List<Object[]> transformDataForTable(List<Object[]> dataFromDB) {
+        java.text.DecimalFormatSymbols symbols = new java.text.DecimalFormatSymbols(new java.util.Locale("id", "ID"));
+        symbols.setGroupingSeparator('.');
+        java.text.DecimalFormat df = new java.text.DecimalFormat("###,###", symbols);
         List<Object[]> transformedData = new ArrayList<>();
         for (Object[] row : dataFromDB) {
             Object[] newRow = new Object[6];
-            newRow[0] = row[0]; // ID ASLI
+            newRow[0] = row[0];
             String nama = row[1] != null ? row[1].toString() : "";
-            newRow[1] = new Object[]{"", nama}; // Format MULTI_LINE
+            newRow[1] = new Object[]{"", nama};
             newRow[2] = row[2] != null ? row[2].toString() : "";
-            String harga = row[3] != null ? row[3].toString() : "";
-            newRow[3] = new String[]{"Rp " + harga}; // Format PRICE
-            newRow[4] = row[4] != null ? row[4].toString() : "0"; // Stok
-            newRow[5] = ""; // Aksi
+            String hargaStr = row[3] != null ? row[3].toString() : "0";
+            try {
+                double hargaBersih = Double.parseDouble(hargaStr.replaceAll("[^0-9]", ""));
+                newRow[3] = new String[]{"Rp " + df.format(hargaBersih)};
+            } catch (Exception e) {
+                newRow[3] = new String[]{"Rp " + hargaStr};
+            }
+            newRow[4] = row[4] != null ? row[4].toString() : "0";
+            newRow[5] = "";
             transformedData.add(newRow);
         }
         return transformedData;
@@ -159,13 +167,11 @@ public class c_daftarMenu {
         try {
             int idMenu = Integer.parseInt(rowData[1].toString());
 
-            // Ambil Nama (Format MULTI_LINE)
             String namaLama = (rowData[2] instanceof Object[])
                     ? ((Object[]) rowData[2])[1].toString() : rowData[2].toString();
 
             String kategoriLama = rowData[3].toString();
 
-            // Ambil Harga (Format PRICE)
             double hargaLama = 0;
             if (rowData[4] instanceof String[]) {
                 hargaLama = Double.parseDouble(((String[]) rowData[4])[0].replaceAll("[^0-9]", ""));
@@ -178,7 +184,6 @@ public class c_daftarMenu {
             List<String> listKategori = model.ambilKategori();
             formMenuDialog dialog = new formMenuDialog(view3, listKategori);
 
-            // Method ini sekarang merubah judul menjadi "Edit Menu"
             dialog.setData(String.valueOf(idMenu), namaLama, hargaLama, stokLama, kategoriLama);
 
             dialog.getBtnSimpan().addActionListener(e -> {
@@ -229,7 +234,7 @@ public class c_daftarMenu {
 
     private void handleDetailAction(int row, Object[] rowData) {
         try {
-            // 1. Ambil data dari tabel (sama seperti edit)
+
             int idMenu = Integer.parseInt(rowData[1].toString());
             String nama = (rowData[2] instanceof Object[]) ? ((Object[]) rowData[2])[1].toString() : rowData[2].toString();
             String kategori = rowData[3].toString();
@@ -243,13 +248,11 @@ public class c_daftarMenu {
 
             int stok = Integer.parseInt(rowData[5].toString().trim());
 
-            // 2. Siapkan Dialog
             List<String> listKategori = model.ambilKategori();
             formMenuDialog dialog = new formMenuDialog(view3, listKategori);
 
-            // 3. Set Data dan AKTIFKAN MODE DETAIL
             dialog.setData(String.valueOf(idMenu), nama, harga, stok, kategori);
-            dialog.setDetailMode(); // <--- Inilah kuncinya
+            dialog.setDetailMode();
 
             dialog.setVisible(true);
         } catch (Exception ex) {

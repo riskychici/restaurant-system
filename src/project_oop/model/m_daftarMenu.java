@@ -42,11 +42,9 @@ public class m_daftarMenu {
         List<String> data = new ArrayList<>();
         String sql = "SELECT * FROM public.pilih_kategori()";
 
-        // Gunakan prepareStatement dari kelas koneksi kamu
-        try (PreparedStatement ps = koneksi.prepareStatement(sql); ResultSet rs = ps.executeQuery()) { // JANGAN masukkan 'sql' lagi di sini
+        try (PreparedStatement ps = koneksi.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                // Sesuai dengan nama kolom di fungsi SQL kamu
                 data.add(rs.getString("kategori_info"));
             }
         } catch (SQLException e) {
@@ -57,7 +55,6 @@ public class m_daftarMenu {
 
     // Tambah Menu
     public String tambahMenu(String nama, int idKategori, double harga, int stok) throws SQLException {
-        // Sesuaikan jumlah parameter (?) menjadi 4 saja
         String sql = "SELECT public.tambah_menu(?::character varying, ?::integer, ?::numeric, ?::integer)";
 
         try (PreparedStatement ps = koneksi.prepareStatement(sql)) {
@@ -65,7 +62,6 @@ public class m_daftarMenu {
             ps.setInt(2, idKategori);
             ps.setDouble(3, harga);
             ps.setInt(4, stok);
-            // Hapus parameter ke-5 jika sebelumnya ada
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
