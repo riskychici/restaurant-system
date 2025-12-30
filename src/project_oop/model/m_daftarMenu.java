@@ -5,14 +5,25 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Model class untuk mengelola data menu
+ */
 public class m_daftarMenu {
 
     private final koneksi koneksi;
 
+    // Constructor
     public m_daftarMenu() throws SQLException {
         this.koneksi = new koneksi();
     }
 
+    // ==================== TAMPILAN DI TABEL ====================
+    /**
+     * Mengambil daftar menu dengan parameter pencarian
+     *
+     * @param search Parameter pencarian
+     * @return List berisi data menu dalam bentuk Object array
+     */
     public List<Object[]> getDaftarMenu(String search) throws SQLException {
         List<Object[]> data = new ArrayList<>();
         String sql = "SELECT * FROM public.daftar_menu(?)";
@@ -37,7 +48,11 @@ public class m_daftarMenu {
         return data;
     }
 
-    // Pilih kategori menu
+    /**
+     * Mengambil daftar kategori menu
+     *
+     * @return List berisi nama kategori
+     */
     public List<String> ambilKategori() throws SQLException {
         List<String> data = new ArrayList<>();
         String sql = "SELECT * FROM public.pilih_kategori()";
@@ -47,13 +62,24 @@ public class m_daftarMenu {
             while (rs.next()) {
                 data.add(rs.getString("kategori_info"));
             }
+
         } catch (SQLException e) {
             throw new SQLException("Gagal mengambil data kategori: " + e.getMessage());
         }
+
         return data;
     }
 
-    // Tambah Menu
+    // ==================== CREATE OPERATIONS ====================
+    /**
+     * Menambahkan menu baru ke database
+     *
+     * @param nama Nama menu
+     * @param idKategori ID kategori menu
+     * @param harga Harga menu
+     * @param stok Stok menu
+     * @return Pesan hasil operasi
+     */
     public String tambahMenu(String nama, int idKategori, double harga, int stok) throws SQLException {
         String sql = "SELECT public.tambah_menu(?::character varying, ?::integer, ?::numeric, ?::integer)";
 
@@ -68,13 +94,25 @@ public class m_daftarMenu {
                     return rs.getString(1);
                 }
             }
+
         } catch (SQLException e) {
             throw new SQLException("Gagal mengeksekusi fungsi tambah_menu: " + e.getMessage());
         }
+
         return "GAGAL: Database tidak memberikan respon.";
     }
 
-    //Edit Menu
+    // ==================== UPDATE OPERATIONS ====================
+    /**
+     * Mengupdate data menu yang sudah ada
+     *
+     * @param id ID menu yang akan diupdate
+     * @param nama Nama menu baru
+     * @param idKategori ID kategori baru
+     * @param harga Harga baru
+     * @param stok Stok baru
+     * @return Pesan hasil operasi
+     */
     public String updateMenu(int id, String nama, int idKategori, double harga, int stok) throws SQLException {
         String sql = "SELECT public.update_menu(?::integer, ?::character varying, ?::integer, ?::numeric, ?::integer)";
 
@@ -91,19 +129,30 @@ public class m_daftarMenu {
                 }
             }
         }
+
         return "GAGAL: Tidak ada respon dari database.";
     }
 
+    // ==================== DELETE OPERATIONS ====================
+    /**
+     * Menghapus menu dari database
+     *
+     * @param idMenu ID menu yang akan dihapus
+     * @return Pesan hasil operasi
+     */
     public String hapusMenu(int idMenu) throws SQLException {
         String sql = "SELECT public.hapus_menu(?)";
+
         try (PreparedStatement ps = koneksi.getConnection().prepareStatement(sql)) {
             ps.setInt(1, idMenu);
+
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     return rs.getString(1);
                 }
             }
         }
-        return "Gagal menghapus data";
+
+        return "GAGAL: Tidak ada respon dari database.";
     }
 }

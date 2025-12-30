@@ -13,6 +13,7 @@ public class m_karyawan {
         this.koneksi = new koneksi();
     }
 
+    // Ambil data karyawan dengan pencarian
     public List<Object[]> getKaryawan(String search) throws SQLException {
         List<Object[]> data = new ArrayList<>();
         String sql = "SELECT * FROM public.karyawan(?)";
@@ -37,20 +38,23 @@ public class m_karyawan {
         return data;
     }
 
-    // Ambil Role
+    // Ambil daftar role
     public List<String> ambilRoles() throws SQLException {
         List<String> roles = new ArrayList<>();
-        try (PreparedStatement ps = koneksi.prepareStatement("SELECT * FROM public.pilih_role()"); ResultSet rs = ps.executeQuery()) {
+        String sql = "SELECT * FROM public.pilih_role()";
+
+        try (PreparedStatement ps = koneksi.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+
             while (rs.next()) {
                 roles.add(rs.getString(1));
             }
         }
+
         return roles;
     }
 
-    // Tambah Karyawan
+    // Tambah karyawan baru
     public String tambahKaryawan(String nama, String noTelp, int idRole) throws SQLException {
-        String hasil = "";
         String sql = "SELECT public.tambah_karyawan(?, ?, ?)";
 
         try (PreparedStatement ps = koneksi.prepareStatement(sql)) {
@@ -59,17 +63,15 @@ public class m_karyawan {
             ps.setInt(3, idRole);
 
             try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    hasil = rs.getString(1);
-                }
+                return rs.next() ? rs.getString(1) : "GAGAL: Error sistem";
             }
         }
-        return hasil;
     }
 
-    // Edit Karyawan
+    // Update data karyawan
     public String updateKaryawan(String id, String nama, String noTelp, int idRole) throws SQLException {
         String sql = "SELECT public.update_karyawan(?::uuid, ?, ?, ?)";
+
         try (PreparedStatement ps = koneksi.prepareStatement(sql)) {
             ps.setString(1, id);
             ps.setString(2, nama);
@@ -82,11 +84,13 @@ public class m_karyawan {
         }
     }
 
-    // Hapus Karyawan
+    // Hapus karyawan
     public String hapusKaryawan(String id) throws SQLException {
         String sql = "SELECT public.hapus_karyawan(?::uuid)";
+
         try (PreparedStatement ps = koneksi.prepareStatement(sql)) {
             ps.setString(1, id);
+
             try (ResultSet rs = ps.executeQuery()) {
                 return rs.next() ? rs.getString(1) : "GAGAL: Error sistem";
             }

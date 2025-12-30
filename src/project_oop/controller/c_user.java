@@ -63,20 +63,16 @@ public class c_user {
         }
 
         Object[] userData = model.rows.get(0);
-        // Asumsi urutan kolom dari fungsi login_user: [message, id_personal, nama_karyawan, ...]
         String message = (String) userData[0];
         int idPersonal = (int) userData[1];
 
         if (!message.equals("Login Gagal") && idPersonal != 0) {
-            // === TAMBAHKAN KODE INI UNTUK MENGISI SESSION ===
             session_user.user_session.setIdPersonal(idPersonal);
 
-            // Ambil nama dari hasil query jika ada, atau gunakan username
             String nama = (userData.length > 2) ? userData[2].toString() : view.get_username().getText();
             session_user.user_session.setNamaPersonal(nama);
 
             System.out.println("Session berhasil diisi untuk: " + nama);
-            // ===============================================
 
             return true;
         }

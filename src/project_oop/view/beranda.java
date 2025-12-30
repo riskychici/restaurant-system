@@ -45,11 +45,8 @@ public class beranda extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tabelBeranda = new javax.swing.JTable();
         btnCari = new javax.swing.JButton();
         kolomPencarian = new javax.swing.JTextField();
-        btnTambahMenu = new javax.swing.JButton();
         btnSideBeranda = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -62,42 +59,12 @@ public class beranda extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         btnKeluar = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        tabelBeranda.setBackground(new java.awt.Color(252, 250, 248));
-        tabelBeranda.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "No", "Nama", "Kategori", "Harga", "Stok", "Status"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Integer.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        tabelBeranda.setName(""); // NOI18N
-        jScrollPane1.setViewportView(tabelBeranda);
-
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 240, 1350, 720));
 
         btnCari.setFont(new java.awt.Font("Poppins", 1, 15)); // NOI18N
         btnCari.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-cari.png"))); // NOI18N
@@ -130,13 +97,6 @@ public class beranda extends javax.swing.JFrame {
             }
         });
         getContentPane().add(kolomPencarian, new org.netbeans.lib.awtextra.AbsoluteConstraints(335, 161, 265, 35));
-
-        btnTambahMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-tambahMenu.png"))); // NOI18N
-        btnTambahMenu.setBorderPainted(false);
-        btnTambahMenu.setContentAreaFilled(false);
-        btnTambahMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnTambahMenu.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-tambahMenu-hover.png"))); // NOI18N
-        getContentPane().add(btnTambahMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(1500, 59, 160, 51));
 
         btnSideBeranda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btn-sidebar-beranda-aktif.png"))); // NOI18N
         btnSideBeranda.setBorderPainted(false);
@@ -213,6 +173,10 @@ public class beranda extends javax.swing.JFrame {
         btnKeluar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btnOut-hover.png"))); // NOI18N
         getContentPane().add(btnKeluar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 983, -1, -1));
 
+        jLabel7.setFont(new java.awt.Font("Poppins", 0, 20)); // NOI18N
+        jLabel7.setText("Mohon maaf, halaman beranda untuk sementara tidak tersedia.");
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 560, 660, 30));
+
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/bg-mainMenu.png"))); // NOI18N
         jLabel3.setToolTipText("");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -224,10 +188,6 @@ public class beranda extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_kolomPencarianActionPerformed
 
-    public JTable getTblMenu() {
-        return tabelBeranda;
-    }
-
     public JTextField getTxtSearch() {
         return kolomPencarian;
     }
@@ -238,6 +198,10 @@ public class beranda extends javax.swing.JFrame {
     
     public JButton getBtnSidebarPesanan() {
         return btnSidePesanan;
+    }
+    
+    public JButton getBtnSidebarDaftarMenu() {
+        return btnSideDaftarMenu;
     }
 
     public JButton getBtnSidebarKaryawan() {
@@ -255,9 +219,9 @@ public class beranda extends javax.swing.JFrame {
     public JButton getBtnCari() {
         return btnCari;
     }
-
-    public JButton getBtnTambahMenu() {
-        return btnTambahMenu;
+    
+    public JButton getBtnKeluar() {
+        return btnKeluar;
     }
     
     private void kolomPencarianFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_kolomPencarianFocusGained
@@ -312,15 +276,13 @@ public class beranda extends javax.swing.JFrame {
     private javax.swing.JButton btnSideMeja;
     private javax.swing.JButton btnSidePembayaran;
     private javax.swing.JButton btnSidePesanan;
-    private javax.swing.JButton btnTambahMenu;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JTextField kolomPencarian;
-    private javax.swing.JTable tabelBeranda;
     // End of variables declaration//GEN-END:variables
 }

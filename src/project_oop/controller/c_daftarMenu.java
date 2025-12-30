@@ -74,6 +74,7 @@ public class c_daftarMenu {
         view3.getBtnSidebarPesanan().addActionListener(new btnSidebarPesanan());
         view3.getBtnSidebarKaryawan().addActionListener(new btnSidebarKaryawan());
         view3.getBtnSidebarMeja().addActionListener(new btnSidebarMeja());
+        view3.getBtnSidebarPembayaran().addActionListener(new btnSidebarPembayaran());
         view3.getBtnKeluar().addActionListener(new btnKeluar());
     }
 
@@ -135,14 +136,25 @@ public class c_daftarMenu {
     // ==================== HANDLER TOMBOL AKSI ====================
     private void handleTambahMenu() {
         try {
-            List<String> kategori = model.ambilKategori();
-            formMenuDialog dialog = new formMenuDialog(view3, kategori);
-            // Judul otomatis "Tambah Menu" (default dialog)
+            List<String> kategoriDariDB = model.ambilKategori();
+
+            List<String> namaSaja = new ArrayList<>();
+            java.util.Map<String, Integer> mapKategori = new java.util.HashMap<>();
+
+            for (String item : kategoriDariDB) {
+                String[] parts = item.split(" - ");
+                int id = Integer.parseInt(parts[0]);
+                String nama = parts[1];
+
+                namaSaja.add(nama);
+                mapKategori.put(nama, id);
+            }
+
+            formMenuDialog dialog = new formMenuDialog(view3, namaSaja);
 
             dialog.getBtnSimpan().addActionListener(e -> {
                 try {
                     String nama = dialog.getNama();
-                    int idKat = dialog.getIdKategori();
                     double harga = dialog.getHarga();
                     int stok = dialog.getStok();
 
@@ -151,8 +163,20 @@ public class c_daftarMenu {
                         return;
                     }
 
+                    if (harga <= 0) {
+                        showError("Harga wajib diisi dan tidak boleh Rp 0!");
+                        return;
+                    }
+
+                    if (stok < 0) {
+                        showError("Stok tidak boleh kurang dari 0!");
+                        return;
+                    }
+
+                    int idKat = mapKategori.get(dialog.getSelectedKategori());
                     String hasil = model.tambahMenu(nama, idKat, harga, stok);
                     prosesHasil(hasil, dialog);
+
                 } catch (SQLException ex) {
                     showError("Database Error: " + ex.getMessage());
                 }
@@ -181,32 +205,59 @@ public class c_daftarMenu {
 
             int stokLama = Integer.parseInt(rowData[5].toString().trim());
 
-            List<String> listKategori = model.ambilKategori();
-            formMenuDialog dialog = new formMenuDialog(view3, listKategori);
+            List<String> listKategoriDB = model.ambilKategori();
+            List<String> listNamaSaja = new java.util.ArrayList<>();
+            java.util.Map<String, Integer> mapKategori = new java.util.HashMap<>();
 
+            for (String item : listKategoriDB) {
+                String[] parts = item.split(" - ");
+                int id = Integer.parseInt(parts[0]);
+                String nama = parts[1];
+
+                listNamaSaja.add(nama);
+                mapKategori.put(nama, id);
+            }
+
+            formMenuDialog dialog = new formMenuDialog(view3, listNamaSaja);
             dialog.setData(String.valueOf(idMenu), namaLama, hargaLama, stokLama, kategoriLama);
 
             dialog.getBtnSimpan().addActionListener(e -> {
                 try {
-                    String hasil = model.updateMenu(idMenu, dialog.getNama(),
-                            dialog.getIdKategori(), dialog.getHarga(), dialog.getStok());
+                    String namaBaru = dialog.getNama();
+                    double hargaBaru = dialog.getHarga();
+                    int stokBaru = dialog.getStok();
+
+                    if (namaBaru.isEmpty()) {
+                        showError("Nama menu tidak boleh kosong!");
+                        return;
+                    }
+
+                    if (hargaBaru <= 0) {
+                        showError("Harga wajib diisi dan tidak boleh Rp 0!");
+                        return;
+                    }
+
+                    int idKatBaru = mapKategori.get(dialog.getSelectedKategori());
+                    String hasil = model.updateMenu(idMenu, namaBaru, idKatBaru, hargaBaru, stokBaru);
                     prosesHasil(hasil, dialog);
+
                 } catch (SQLException ex) {
                     showError("Gagal Update: " + ex.getMessage());
                 }
             });
+
             dialog.setVisible(true);
+
         } catch (Exception ex) {
             showError("Gagal memproses data edit: " + ex.getMessage());
+            ex.printStackTrace();
         }
     }
 
     private void handleDeleteAction(int row, Object[] rowData) {
         try {
-            // Ambil ID dari kolom yang disembunyikan (Index 1)
             int idMenu = Integer.parseInt(rowData[1].toString());
 
-            // Ambil Nama Menu untuk pesan konfirmasi yang lebih jelas
             String namaMenu = (rowData[2] instanceof Object[])
                     ? ((Object[]) rowData[2])[1].toString() : rowData[2].toString();
 
@@ -219,10 +270,10 @@ public class c_daftarMenu {
             );
 
             if (confirm == JOptionPane.YES_OPTION) {
-                String hasil = model.hapusMenu(idMenu); // Pastikan Model menerima Integer
+                String hasil = model.hapusMenu(idMenu);
                 if (hasil.toLowerCase().contains("berhasil")) {
                     showSuccess(hasil);
-                    tampilkanDaftarMenu(); // Refresh tabel
+                    tampilkanDaftarMenu();
                 } else {
                     showError(hasil);
                 }
@@ -234,10 +285,9 @@ public class c_daftarMenu {
 
     private void handleDetailAction(int row, Object[] rowData) {
         try {
-
             int idMenu = Integer.parseInt(rowData[1].toString());
             String nama = (rowData[2] instanceof Object[]) ? ((Object[]) rowData[2])[1].toString() : rowData[2].toString();
-            String kategori = rowData[3].toString();
+            String kategoriLama = rowData[3].toString();
 
             double harga = 0;
             if (rowData[4] instanceof String[]) {
@@ -248,15 +298,23 @@ public class c_daftarMenu {
 
             int stok = Integer.parseInt(rowData[5].toString().trim());
 
-            List<String> listKategori = model.ambilKategori();
-            formMenuDialog dialog = new formMenuDialog(view3, listKategori);
+            List<String> listKategoriDB = model.ambilKategori();
+            List<String> listNamaSaja = new java.util.ArrayList<>();
 
-            dialog.setData(String.valueOf(idMenu), nama, harga, stok, kategori);
+            for (String item : listKategoriDB) {
+                String[] parts = item.split(" - ");
+                listNamaSaja.add(parts[1]);
+            }
+
+            formMenuDialog dialog = new formMenuDialog(view3, listNamaSaja);
+
+            dialog.setData(String.valueOf(idMenu), nama, harga, stok, kategoriLama);
             dialog.setDetailMode();
 
             dialog.setVisible(true);
         } catch (Exception ex) {
             showError("Gagal menampilkan detail: " + ex.getMessage());
+            ex.printStackTrace();
         }
     }
 
@@ -285,9 +343,11 @@ public class c_daftarMenu {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                new c_pesanan();
+                new c_beranda();
                 view3.dispose();
             } catch (SQLException ex) {
+                System.getLogger(c_pesanan.class.getName())
+                        .log(System.Logger.Level.ERROR, "Kesalahan navigasi ke Beranda", ex);
             }
         }
     }
@@ -322,6 +382,18 @@ public class c_daftarMenu {
         public void actionPerformed(ActionEvent e) {
             try {
                 new c_meja();
+                view3.dispose();
+            } catch (SQLException ex) {
+            }
+        }
+    }
+
+    private class btnSidebarPembayaran implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                new c_pembayaran();
                 view3.dispose();
             } catch (SQLException ex) {
             }

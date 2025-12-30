@@ -6,7 +6,8 @@ import java.awt.*;
 import java.util.List;
 
 /**
- * Dialog untuk menambah/update karyawan dengan desain modern
+ * Dialog untuk menambah/update karyawan dengan desain modern. ID Role
+ * disembunyikan dari dropdown namun tetap dapat diambil nilainya.
  */
 public class formKaryawanDialog extends JDialog {
 
@@ -29,26 +30,43 @@ public class formKaryawanDialog extends JDialog {
     private JLabel lblJudul;
     private JTextField txtNama;
     private JTextField txtNoTelp;
-    private JComboBox<String> cbRole;
+    private JComboBox<RoleItem> cbRole;
     private JButton btnSimpan;
     private JButton btnBatal;
 
     // ========== FIELDS ==========
     private String idKaryawan = null;
 
-    // ========== CONSTRUCTORS ==========
     /**
-     * Constructor untuk TAMBAH Karyawan
+     * Inner Class untuk menampung data Role
      */
+    private static class RoleItem {
+
+        private final int id;
+        private final String nama;
+
+        public RoleItem(int id, String nama) {
+            this.id = id;
+            this.nama = nama;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        @Override
+        public String toString() {
+            return nama;
+        }
+    }
+
+    // ========== CONSTRUCTORS ==========
     public formKaryawanDialog(JFrame parent, List<String> roles) {
         super(parent, "Tambah Karyawan Baru", true);
         initComponents(roles);
         setLocationRelativeTo(parent);
     }
 
-    /**
-     * Constructor untuk EDIT Karyawan
-     */
     public formKaryawanDialog(JFrame parent, List<String> roles, String id, String nama, String noTelp, int idRole) {
         super(parent, "Edit Karyawan", true);
         this.idKaryawan = id;
@@ -74,6 +92,10 @@ public class formKaryawanDialog extends JDialog {
         setLayout(new BorderLayout());
         setSize(DIALOG_WIDTH, DIALOG_HEIGHT);
         setResizable(false);
+    }
+
+    private void setupEventListeners() {
+        btnBatal.addActionListener(e -> dispose());
     }
 
     private JPanel createMainPanel(List<String> roles) {
@@ -103,17 +125,6 @@ public class formKaryawanDialog extends JDialog {
         panel.add(btnSimpan);
 
         return panel;
-    }
-
-    private JButton createButton(String text, Color backgroundColor) {
-        JButton button = new JButton(text);
-        String buttonStyle = "minimumWidth: 100; minimumHeight: 35; arc: 10;";
-        button.putClientProperty(FlatClientProperties.STYLE, buttonStyle);
-        button.setBackground(backgroundColor);
-        button.setForeground(Color.WHITE);
-        button.setFont(fontPoppinsPlain);
-        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        return button;
     }
 
     private GridBagConstraints createGridBagConstraints() {
@@ -166,14 +177,25 @@ public class formKaryawanDialog extends JDialog {
         gbc.insets = new Insets(0, 0, 5, 0);
         panel.add(label, gbc);
 
-        cbRole = new JComboBox<>(roles.toArray(new String[0]));
+        cbRole = new JComboBox<>();
+        for (String r : roles) {
+            try {
+                String[] parts = r.split(" - ");
+                int id = Integer.parseInt(parts[0].trim());
+                String nama = parts[1].trim();
+                cbRole.addItem(new RoleItem(id, nama));
+            } catch (Exception e) {
+                System.err.println("Gagal parsing role: " + r);
+            }
+        }
+
         cbRole.setFont(fontPoppinsPlain);
         gbc.gridy = 6;
         gbc.insets = new Insets(0, 0, 10, 0);
         panel.add(cbRole, gbc);
     }
 
-    // ========== HELPER METHODS ==========
+    // ========== COMPONENT CREATION ==========
     private JLabel createLabel(String text) {
         JLabel label = new JLabel(text);
         label.setFont(fontPoppinsPlain);
@@ -187,8 +209,14 @@ public class formKaryawanDialog extends JDialog {
         return textField;
     }
 
-    private void setupEventListeners() {
-        btnBatal.addActionListener(e -> dispose());
+    private JButton createButton(String text, Color backgroundColor) {
+        JButton button = new JButton(text);
+        button.putClientProperty(FlatClientProperties.STYLE, "minimumWidth: 100; minimumHeight: 35; arc: 10;");
+        button.setBackground(backgroundColor);
+        button.setForeground(Color.WHITE);
+        button.setFont(fontPoppinsPlain);
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        return button;
     }
 
     // ========== PUBLIC METHODS ==========
@@ -203,16 +231,6 @@ public class formKaryawanDialog extends JDialog {
             lblJudul.setText("Edit Karyawan");
         }
         setTitle("Edit Karyawan");
-    }
-
-    private void selectRoleById(int idRole) {
-        for (int i = 0; i < cbRole.getItemCount(); i++) {
-            String item = cbRole.getItemAt(i);
-            if (item.startsWith(idRole + " - ")) {
-                cbRole.setSelectedIndex(i);
-                break;
-            }
-        }
     }
 
     public void setDetailMode() {
@@ -230,6 +248,16 @@ public class formKaryawanDialog extends JDialog {
         btnBatal.setText("Tutup");
     }
 
+    private void selectRoleById(int idRole) {
+        for (int i = 0; i < cbRole.getItemCount(); i++) {
+            RoleItem item = cbRole.getItemAt(i);
+            if (item.getId() == idRole) {
+                cbRole.setSelectedIndex(i);
+                break;
+            }
+        }
+    }
+
     // ========== GETTERS ==========
     public String getIdKaryawan() {
         return idKaryawan;
@@ -244,11 +272,8 @@ public class formKaryawanDialog extends JDialog {
     }
 
     public int getIdRole() {
-        String selected = (String) cbRole.getSelectedItem();
-        if (selected != null) {
-            return Integer.parseInt(selected.split(" - ")[0]);
-        }
-        return -1;
+        RoleItem selected = (RoleItem) cbRole.getSelectedItem();
+        return (selected != null) ? selected.getId() : -1;
     }
 
     public JButton getBtnSimpan() {

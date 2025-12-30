@@ -70,6 +70,7 @@ public class c_meja {
         this.view3 = new daftarMenu();
         this.view4 = new karyawan();
         this.view5 = new meja();
+        this.view6 = new pembayaran();
         this.view5.setVisible(true);
     }
 
@@ -79,6 +80,7 @@ public class c_meja {
         view5.getBtnSidebarPesanan().addActionListener(new btnSidebarPesanan());
         view5.getBtnSidebarDaftarMenu().addActionListener(new btnSidebarDaftarMenu());
         view5.getBtnSidebarKaryawan().addActionListener(new btnSidebarKaryawan());
+        view5.getBtnSidebarPembayaran().addActionListener(new btnSidebarPembayaran());
         view5.getBtnKeluar().addActionListener(new btnKeluar());
         view5.getBtnTambahMeja().addActionListener(e -> DialogTambah());
     }
@@ -322,7 +324,7 @@ public class c_meja {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                new c_pesanan();
+                new c_beranda();
                 view5.dispose();
             } catch (SQLException ex) {
                 System.getLogger(c_pesanan.class.getName())
@@ -369,6 +371,18 @@ public class c_meja {
             } catch (SQLException ex) {
                 System.getLogger(c_pesanan.class.getName())
                         .log(System.Logger.Level.ERROR, "Kesalahan navigasi ke Pesanan", ex);
+            }
+        }
+    }
+
+    private class btnSidebarPembayaran implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                new c_pembayaran();
+                view5.dispose();
+            } catch (SQLException ex) {
             }
         }
     }

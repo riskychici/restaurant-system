@@ -68,6 +68,8 @@ public class c_karyawan {
         this.view2 = new pesanan();
         this.view3 = new daftarMenu();
         this.view4 = new karyawan();
+        this.view5 = new meja();
+        this.view6 = new pembayaran();
         this.view4.setVisible(true);
     }
 
@@ -77,6 +79,7 @@ public class c_karyawan {
         view4.getBtnSidebarPesanan().addActionListener(new btnSidebarPesanan());
         view4.getBtnSidebarDaftarMenu().addActionListener(new btnSidebarDaftarMenu());
         view4.getBtnSidebarMeja().addActionListener(new btnSidebarMeja());
+        view4.getBtnSidebarPembayaran().addActionListener(new btnSidebarPembayaran());
         view4.getBtnKeluar().addActionListener(new btnKeluar());
         view4.getBtnTambahKaryawan().addActionListener(e -> handleTambahKaryawan());
     }
@@ -225,14 +228,19 @@ public class c_karyawan {
         try {
             List<String> roles = model.ambilRoles();
             for (String r : roles) {
-                if (r.toLowerCase().contains(namaRole.toLowerCase())) {
-                    return Integer.parseInt(r.split(" - ")[0]);
+                String[] parts = r.split(" - ");
+                if (parts.length >= 2) {
+                    int id = Integer.parseInt(parts[0].trim());
+                    String namaDiList = parts[1].trim();
+                    if (namaDiList.equalsIgnoreCase(namaRole.trim())) {
+                        return id;
+                    }
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Gagal mencari ID Role: " + e.getMessage());
         }
-        return 0;
+        return 1;
     }
 
     private void handleEditAction(int row, Object[] rowData) {
@@ -252,24 +260,16 @@ public class c_karyawan {
             String roleStr = "";
             if (rowData[4] instanceof Object[]) {
                 Object[] roleData = (Object[]) rowData[4];
-                roleStr = (roleData.length > 1) ? roleData[1].toString() : roleData[0].toString();
+                roleStr = roleData[0].toString();
             } else {
                 roleStr = rowData[4].toString();
             }
 
-            int idRole;
-            if (roleStr.contains(" - ")) {
-                idRole = Integer.parseInt(roleStr.split(" - ")[0]);
-            } else {
-                try {
-                    idRole = Integer.parseInt(roleStr.trim());
-                } catch (NumberFormatException e) {
-                    idRole = 0;
-                }
-            }
+            int idRole = cariIdRoleDariNama(roleStr);
 
             List<String> roles = model.ambilRoles();
             formKaryawanDialog dialog = new formKaryawanDialog(view4, roles);
+
             dialog.setData(id, nama, noTelp, idRole);
 
             dialog.getBtnSimpan().addActionListener(e -> {
@@ -294,8 +294,9 @@ public class c_karyawan {
             });
 
             dialog.setVisible(true);
+
         } catch (Exception ex) {
-            showError("Terjadi kesalahan: " + ex.getMessage());
+            showError("Terjadi kesalahan saat membuka form edit: " + ex.getMessage());
             ex.printStackTrace();
         }
     }
@@ -357,7 +358,7 @@ public class c_karyawan {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                new c_pesanan();
+                new c_beranda();
                 view4.dispose();
             } catch (SQLException ex) {
                 System.getLogger(c_pesanan.class.getName())
@@ -404,6 +405,18 @@ public class c_karyawan {
             } catch (SQLException ex) {
                 System.getLogger(c_pesanan.class.getName())
                         .log(System.Logger.Level.ERROR, "Kesalahan navigasi ke Pesanan", ex);
+            }
+        }
+    }
+
+    private class btnSidebarPembayaran implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                new c_pembayaran();
+                view4.dispose();
+            } catch (SQLException ex) {
             }
         }
     }

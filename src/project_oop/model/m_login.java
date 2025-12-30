@@ -31,12 +31,10 @@ public class m_login {
                 ResultSetMetaData meta = rs.getMetaData();
                 int columnCount = meta.getColumnCount();
 
-                // Buat map nama kolom ke index (sekali saja)
                 for (int i = 1; i <= columnCount; i++) {
                     this.columns.put(meta.getColumnName(i), i - 1);
                 }
 
-                // Ambil semua rows
                 while (rs.next()) {
                     Object[] row = new Object[columnCount];
                     for (int i = 1; i <= columnCount; i++) {

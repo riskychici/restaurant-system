@@ -52,7 +52,7 @@ public class user_session {
         user_session.peranList = peranList;
     }
 
-    // Method helper untuk cek apakah user punya peran tertentu
+    // Method untuk cek apakah user punya peran tertentu
     public static boolean hasRole(String roleName) {
         return peranList != null && peranList.contains(roleName);
     }
