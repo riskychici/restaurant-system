@@ -13,11 +13,6 @@ public class m_pembayaran {
 
     private final koneksi db;
 
-    /**
-     * Constructor - inisialisasi koneksi database
-     *
-     * @throws SQLException jika koneksi database gagal
-     */
     public m_pembayaran() throws SQLException {
         this.db = new koneksi();
     }
@@ -27,8 +22,6 @@ public class m_pembayaran {
      * Mengambil data pembayaran berdasarkan parameter pencarian
      *
      * @param search parameter pencarian
-     * @return List data pembayaran dalam bentuk array Object
-     * @throws SQLException jika terjadi error database
      */
     public List<Object[]> getPembayaran(String search) throws SQLException {
         List<Object[]> data = new ArrayList<>();
@@ -60,7 +53,6 @@ public class m_pembayaran {
      *
      * @param idPelanggan ID pelanggan yang akan dilihat detailnya
      * @return List detail pembayaran (nama menu, harga, qty, subtotal)
-     * @throws SQLException jika terjadi error database
      */
     public List<Object[]> detailPembayaran(int idPelanggan) throws SQLException {
         List<Object[]> data = new ArrayList<>();
@@ -88,7 +80,6 @@ public class m_pembayaran {
      * @param idStatusBayar ID status pembayaran
      * @param idMetodeBayar ID metode pembayaran
      * @return Pesan hasil operasi update
-     * @throws SQLException jika terjadi error database
      */
     public String updatePembayaran(int idPelanggan, int idStatusBayar, int idMetodeBayar)
             throws SQLException {
@@ -109,7 +100,6 @@ public class m_pembayaran {
      * Mengambil data status pembayaran untuk ComboBox
      *
      * @return List data status pembayaran (id, status)
-     * @throws SQLException jika terjadi error database
      */
     public List<Object[]> getStatusPembayaran() throws SQLException {
         List<Object[]> data = new ArrayList<>();
@@ -132,7 +122,6 @@ public class m_pembayaran {
      * Mengambil data metode pembayaran untuk ComboBox
      *
      * @return List data metode pembayaran (id, jenis)
-     * @throws SQLException jika terjadi error database
      */
     public List<Object[]> getMetodePembayaran() throws SQLException {
         List<Object[]> data = new ArrayList<>();

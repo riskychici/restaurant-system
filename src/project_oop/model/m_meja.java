@@ -62,7 +62,6 @@ public class m_meja {
     // Kosongkan Meja
     public String konfirmasiMejaKosong(int idMeja) throws SQLException {
         String hasil = "";
-        // Memanggil fungsi SQL yang tadi kita buat
         String sql = "SELECT public.konfirmasi_meja_kosong(?)";
 
         try (PreparedStatement ps = koneksi.prepareStatement(sql)) {
